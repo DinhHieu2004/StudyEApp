@@ -57,7 +57,6 @@
                     android:layout_height="wrap_content"
                     android:padding="24dp">
 
-                    <!-- Tiêu đề -->
                     <TextView
                         android:id="@+id/txtTitle"
                         android:layout_width="wrap_content"
@@ -70,7 +69,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />
 
-                    <!-- Đường kẻ phân cách -->
                     <View
                         android:id="@+id/divider"
                         android:layout_width="80dp"
@@ -81,7 +79,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />
 
-                    <!-- Label cho số lượng câu hỏi -->
                     <TextView
                         android:id="@+id/txtAmountLabel"
                         android:layout_width="wrap_content"
@@ -93,7 +90,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/divider"
                         app:layout_constraintStart_toStartOf="parent" />
 
-                    <!-- Input số lượng câu hỏi -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/inputLayoutAmount"
                         android:layout_width="match_parent"
@@ -115,7 +111,6 @@
                             android:background="@drawable/edit_text_background" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Label cho danh mục -->
                     <TextView
                         android:id="@+id/txtCategoryLabel"
                         android:layout_width="wrap_content"
@@ -127,7 +122,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/inputLayoutAmount"
                         app:layout_constraintStart_toStartOf="parent" />
 
-                    <!-- Spinner danh mục -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/spinnerLayoutCategory"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -147,7 +141,6 @@
                             android:hint="Chọn danh mục" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Label cho độ khó -->
                     <TextView
                         android:id="@+id/txtDifficultyLabel"
                         android:layout_width="wrap_content"
@@ -211,6 +204,7 @@
                             android:hint="Chọn loại câu hỏi" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <!-- Nút bắt đầu -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnStartQuiz"
                         android:layout_width="match_parent"
@@ -230,4 +224,15 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

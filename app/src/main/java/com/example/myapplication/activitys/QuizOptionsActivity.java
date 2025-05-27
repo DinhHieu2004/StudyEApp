@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -16,6 +17,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.myapplication.DTO.Question;
 import com.example.myapplication.DTO.request.QuestionFetchRequest;
 import com.example.myapplication.DTO.response.OpenTriviaQuestionResponse;
 import com.example.myapplication.R;
@@ -29,7 +31,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,11 +45,15 @@ public class QuizOptionsActivity extends AppCompatActivity {
     private MaterialButton btnStartQuiz;
     private ArrayList<String> categoryList = new ArrayList<>();
     private ArrayList<Integer> categoryIdList = new ArrayList<>();
+    private ProgressBar progressBar;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_options);
+
+        progressBar = findViewById(R.id.progressBar);
 
         edtAmount = findViewById(R.id.edtAmount);
         spinnerCategory = findViewById(R.id.spinnerCategory);
@@ -78,6 +86,12 @@ public class QuizOptionsActivity extends AppCompatActivity {
             );
             Log.i(TAG, "onCreate: "+ request);
 
+            // Hiển thị ProgressBar
+            progressBar.setVisibility(ProgressBar.VISIBLE);
+            // Vô hiệu hóa nút Start Quiz để tránh nhấn nhiều lần
+            btnStartQuiz.setEnabled(false);
+
+
             ApiService apiService = ApiClient.getClient().create(ApiService.class);
             Call<List<OpenTriviaQuestionResponse>> call  = apiService.fetchQuestions(request);
 
@@ -87,12 +101,19 @@ public class QuizOptionsActivity extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() != null) {
 
 
+                        // Ẩn ProgressBar
+                        progressBar.setVisibility(ProgressBar.GONE);
+                        // Kích hoạt lại nút Start Quiz
+                        btnStartQuiz.setEnabled(true);
+
                         List<OpenTriviaQuestionResponse> questions = response.body();
 
                         Log.d("API_Response", "Data: " + questions);
 
+
+                        List<Question> questionsToSend = convertToQuestions(questions);
                         Intent intent = new Intent(QuizOptionsActivity.this, QuizQuestionActivity.class);
-                        intent.putExtra("questions", new ArrayList<>(questions));
+                        intent.putExtra("questions", new ArrayList<>(questionsToSend)); // Gửi đúng kiểu
                         startActivity(intent);
                     } else {
                         Log.e("API_Response", "Error: " + response.errorBody().toString());
@@ -103,13 +124,29 @@ public class QuizOptionsActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<List<OpenTriviaQuestionResponse>> call, Throwable t) {
+                    // Ẩn ProgressBar
+                    progressBar.setVisibility(ProgressBar.GONE);
+                    // Kích hoạt lại nút Start Quiz
+                    btnStartQuiz.setEnabled(true);
+
                     Toast.makeText(QuizOptionsActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                    System.out.println(t.getMessage());
 
                 }
             });
         });
     }
+    private List<Question> convertToQuestions(List<OpenTriviaQuestionResponse> responseList) {
+        List<Question> result = new ArrayList<>();
+        for (OpenTriviaQuestionResponse r : responseList) {
+            List<String> options = new ArrayList<>(r.getIncorrectAnswers());
+            options.add(r.getCorrectAnswer());
+            Collections.shuffle(options);
+
+            result.add(new Question(r.getQuestion(), options, r.getCorrectAnswer()));
+        }
+        return result;
+    }
+
 
     private int getCategoryPosition(String categoryName) {
         for (int i = 0; i < categoryList.size(); i++) {
@@ -161,7 +198,6 @@ public class QuizOptionsActivity extends AppCompatActivity {
                                 android.R.layout.simple_dropdown_item_1line, categoryList);
                         spinnerCategory.setAdapter(adapter);
 
-                        // Thiết lập giá trị mặc định
                         spinnerCategory.setText(categoryList.get(0), false);
                     } catch (JSONException e) {
                         e.printStackTrace();
