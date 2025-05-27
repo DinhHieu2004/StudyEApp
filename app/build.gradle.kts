@@ -1,5 +1,9 @@
+import org.jetbrains.kotlin.gradle.internal.KaptTask
+
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
@@ -26,8 +30,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17" 
     }
 }
 
@@ -40,4 +47,15 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+    kapt("com.github.bumptech.glide:compiler:4.12.0")
+}
+
+kapt {
+    javacOptions {
+        option("--add-exports", "jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED")
+        option("--add-exports", "jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED")
+        option("--add-exports", "jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED")
+    }
 }
