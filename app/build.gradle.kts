@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.internal.KaptTask
 
 plugins {
     alias(libs.plugins.android.application)
@@ -49,6 +48,12 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     implementation("com.github.bumptech.glide:glide:4.12.0")
+
+    implementation("com.android.volley:volley:1.2.1")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("org.apache.commons:commons-text:1.10.0")
+    
     kapt("com.github.bumptech.glide:compiler:4.12.0")
 }
 
@@ -59,3 +64,4 @@ kapt {
         option("--add-exports", "jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED")
     }
 }
+
