@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.CoursesAdapter;
-import com.example.myapplication.domain.CoursesDomain;
+import com.example.myapplication.model.Courses;
 
 import java.util.ArrayList;
 
@@ -25,12 +25,12 @@ public class CoursesListActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
-        ArrayList<CoursesDomain> items = new ArrayList<>();
-        items.add(new CoursesDomain("Advanced certification Program in AI", 169, "ic_1"));
-        items.add(new CoursesDomain("Google Cloud Platform Architecture", 69, "ic_2"));
-        items.add(new CoursesDomain("Fundamental of Java Programming", 150, "ic_3"));
-        items.add(new CoursesDomain("Introduction to UI design history", 79, "ic_4"));
-        items.add(new CoursesDomain("PG Program in Big Data Engineering", 49, "ic_5"));
+        ArrayList<Courses> items = new ArrayList<>();
+        items.add(new Courses("Advanced certification Program in AI", 169, "ic_1"));
+        items.add(new Courses("Google Cloud Platform Architecture", 69, "ic_2"));
+        items.add(new Courses("Fundamental of Java Programming", 150, "ic_3"));
+        items.add(new Courses("Introduction to UI design history", 79, "ic_4"));
+        items.add(new Courses("PG Program in Big Data Engineering", 49, "ic_5"));
 
         recyclerViewCourse=findViewById(R.id.view);
         recyclerViewCourse.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

@@ -13,15 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
-import com.example.myapplication.domain.CoursesDomain;
+import com.example.myapplication.model.Courses;
 
 import java.util.ArrayList;
 
 public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.Viewholder> {
-    ArrayList<CoursesDomain> items;
+    ArrayList<Courses> items;
     Context context;
 
-    public CoursesAdapter(ArrayList<CoursesDomain> items) {
+    public CoursesAdapter(ArrayList<Courses> items) {
         this.items = items;
     }
 

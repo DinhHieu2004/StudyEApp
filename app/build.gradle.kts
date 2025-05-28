@@ -56,12 +56,3 @@ dependencies {
     
     kapt("com.github.bumptech.glide:compiler:4.12.0")
 }
-
-kapt {
-    javacOptions {
-        option("--add-exports", "jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED")
-        option("--add-exports", "jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED")
-        option("--add-exports", "jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED")
-    }
-}
-

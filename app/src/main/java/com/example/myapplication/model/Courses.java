@@ -1,11 +1,11 @@
-package com.example.myapplication.domain;
+package com.example.myapplication.model;
 
-public class CoursesDomain {
+public class Courses {
     private String title;
     private int price;
     private String picPath;
 
-    public CoursesDomain(String title, int price, String picPath) {
+    public Courses(String title, int price, String picPath) {
         this.title = title;
         this.price = price;
         this.picPath = picPath;

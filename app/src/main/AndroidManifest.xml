@@ -32,8 +32,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activitys.QuizOptionsActivity" />
-        <activity android:name=".activitys.QuizQuestionActivity">
+        <activity android:name=".activity.QuizOptionsActivity" />
+        <activity android:name=".activity.QuizQuestionActivity">
         </activity>
 
     </application>
