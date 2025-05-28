@@ -69,6 +69,4 @@ public class QuizQuestionActivity extends AppCompatActivity {
 
         startActivity(intent);
     }
-
-
 }
