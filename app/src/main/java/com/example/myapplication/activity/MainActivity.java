@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ConstraintLayout btn1 = findViewById(R.id.btn1);
+        ConstraintLayout btn1 = findViewById(R.id.mainLayout);
         btn1.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CoursesListActivity.class)));
 
     }
