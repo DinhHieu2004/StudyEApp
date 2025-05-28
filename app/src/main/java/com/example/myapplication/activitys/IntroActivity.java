@@ -1,9 +1,8 @@
-package com.example.myapplication.activity;
+package com.example.myapplication.activitys;
 
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;

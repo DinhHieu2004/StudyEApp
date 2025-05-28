@@ -1,4 +1,4 @@
-package com.example.myapplication.activity;
+package com.example.myapplication.activitys;
 
 import android.os.Bundle;
 
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.adapter.CoursesAdapter;
+import com.example.myapplication.adapters.CoursesAdapter;
 import com.example.myapplication.model.Courses;
 
 import java.util.ArrayList;

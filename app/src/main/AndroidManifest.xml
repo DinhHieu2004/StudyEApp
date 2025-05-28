@@ -15,16 +15,17 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:usesCleartextTraffic="true"
         tools:targetApi="31" >
+
         <activity
-            android:name=".activity.CoursesListActivity"
+            android:name=".activitys.CoursesListActivity"
             android:exported="true" >
 
         </activity>
         <activity
-            android:name=".activity.IntroActivity"
+            android:name=".activitys.IntroActivity"
             android:exported="false"/>
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activitys.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,11 +33,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.QuizOptionsActivity" />
-        <activity android:name=".activity.QuizQuestionActivity">
-        </activity>
+        <activity android:name=".activitys.QuizOptionsActivity" />
+        <activity android:name=".activitys.QuizQuestionActivity" />
+        <activity android:name=".activitys.ResultActivity" />
 
     </application>
+
 
 
 </manifest>
