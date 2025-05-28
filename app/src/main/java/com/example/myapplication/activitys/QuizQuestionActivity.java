@@ -8,11 +8,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.DTO.AnswerDetail;
 import com.example.myapplication.DTO.Question;
+import com.example.myapplication.DTO.QuizResult;
 import com.example.myapplication.R;
 import com.example.myapplication.adapters.QuestionAdapter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -59,6 +62,27 @@ public class QuizQuestionActivity extends AppCompatActivity {
                 score++;
             }
         }
+
+        List<AnswerDetail> answerDetails = new ArrayList<>();
+        for (int i = 0; i < questionList.size(); i++) {
+            Question q = questionList.get(i);
+            String userAnswer = userAnswers.get(i);
+
+            AnswerDetail detail = new AnswerDetail();
+            detail.setQuestionText(q.getQuestionText());
+            detail.setOptions(q.getOptions());
+            detail.setCorrectAnswer(q.getCorrectAnswer());
+            detail.setUserAnswer(userAnswer != null ? userAnswer : "Chưa trả lời");
+
+            answerDetails.add(detail);
+        }
+
+        QuizResult result = new QuizResult();
+        result.setScore(score);
+        result.setTotal(questionList.size());
+        result.setDuration(duration);
+        result.setTimestamp(System.currentTimeMillis());
+        result.setAnswers(answerDetails);
 
         Intent intent = new Intent(this, ResultActivity.class);
         intent.putExtra("score", score);
