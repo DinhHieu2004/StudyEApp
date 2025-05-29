@@ -2,6 +2,7 @@ package com.example.myapplication.services;
 
 import com.example.myapplication.DTO.request.QuestionFetchRequest;
 import com.example.myapplication.DTO.request.TokenRequest;
+import com.example.myapplication.DTO.request.UserRequest;
 import com.example.myapplication.DTO.response.OpenTriviaQuestionResponse;
 import com.example.myapplication.DTO.response.UserResponse;
 
@@ -16,4 +17,6 @@ public interface ApiService {
     Call<List<OpenTriviaQuestionResponse>> fetchQuestions(@Body QuestionFetchRequest request);
     @POST("auth/login")
     Call<UserResponse> loginWithFirebaseToken(@Body TokenRequest tokenRequest);
+    @POST("auth/signUp")
+    Call<Void> registerUser(@Body UserRequest userRequest);
 }
