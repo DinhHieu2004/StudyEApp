@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">My Application</string>
+
+    <string name="dialogue_example">
+        Emma: Excuse me, can you help me find the apples?\n
+        Salesperson: Sure! The apples are in aisle 5.\n
+        Emma: Thank you. How much do they cost?\n
+        Salesperson: They are $2 per pound.\n
+        Student: Is there any discount?\n
+        Salesperson: Yes! 10% off today.\n
+        Student: Awesome!
+    </string>
 </resources>

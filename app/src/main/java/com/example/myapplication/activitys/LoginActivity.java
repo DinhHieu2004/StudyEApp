@@ -149,14 +149,22 @@ public class LoginActivity extends Fragment {
         });
     }
     private void saveUserLocally(UserResponse user) {
-        SharedPreferences prefs = requireActivity().getSharedPreferences("user_data", Context.MODE_PRIVATE);
+        if (!isAdded()) return;
+
+        Context context = getContext();
+        if (context == null) return;
+
+        SharedPreferences prefs = context.getSharedPreferences("user_data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("uid", user.getUid());
         editor.putString("email", user.getEmail());
         editor.putString("name", user.getName());
         editor.apply();
+
         logout();
     }
+
+
     public void logout() {
         SharedPreferences prefs = requireActivity().getSharedPreferences("user_data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
