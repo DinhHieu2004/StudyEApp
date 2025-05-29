@@ -1,37 +1,50 @@
 package com.example.myapplication.activitys;
 
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
+import com.example.myapplication.fragments.HomeFragment;
+import com.example.myapplication.fragments.SceneLearnFragment;
+import com.example.myapplication.fragments.QuizFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private void replaceFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .commit();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ConstraintLayout btn1 = findViewById(R.id.mainLayout);
-        btn1.setOnClickListener(v ->
-                startActivity(new Intent(MainActivity.this, CoursesListActivity.class))
-        );
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
 
-        // Hỗ trợ layout toàn màn hình và tránh che bottom nav
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-        View bottomNav = findViewById(R.id.bottomNavigationView);
-        ViewCompat.setOnApplyWindowInsetsListener(bottomNav, (v, insets) -> {
-            v.setPadding(0, 0, 0, insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom);
-            return insets;
+        bottomNav.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_home) {
+                replaceFragment(new HomeFragment());
+                return true;
+            } else if (itemId == R.id.nav_learn) {
+                replaceFragment(new SceneLearnFragment());
+                return true;
+            } else if (itemId == R.id.nav_quiz) {
+                replaceFragment(new QuizFragment());
+                return true;
+            }
+            return false;
         });
-    }
 
+        if (savedInstanceState == null) {
+            bottomNav.setSelectedItemId(R.id.nav_home);
+        }
+    }
 }
