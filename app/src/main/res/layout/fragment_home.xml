@@ -273,7 +273,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:text="Current Study Courses"
+                android:text="Current Study Lession"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/black" />
@@ -293,7 +293,7 @@
                     android:layout_marginEnd="12dp"
                     android:layout_weight="1"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/courses1" />
+                    android:src="@drawable/lession1" />
 
 
 
@@ -354,7 +354,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Recommended Courses"
+                    android:text="Recommended Lession"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -390,7 +390,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="170dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/courses2" />
+                        android:src="@drawable/lession2" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -434,7 +434,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="170dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/courses3" />
+                        android:src="@drawable/lession3" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -488,7 +488,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="170dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/courses4" />
+                        android:src="@drawable/lession4" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -532,7 +532,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="170dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/courses5" />
+                        android:src="@drawable/lession5" />
 
                     <TextView
                         android:layout_width="match_parent"

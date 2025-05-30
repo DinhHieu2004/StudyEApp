@@ -7,12 +7,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.adapters.CoursesAdapter;
-import com.example.myapplication.model.Courses;
+import com.example.myapplication.adapters.LessionAdapter;
+import com.example.myapplication.model.Lessions;
 
 import java.util.ArrayList;
 
-public class CoursesListActivity extends AppCompatActivity {
+public class LessionListActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapterCourceList;
     private RecyclerView recyclerViewCourse;
 
@@ -25,17 +25,17 @@ public class CoursesListActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
-        ArrayList<Courses> items = new ArrayList<>();
-        items.add(new Courses("Advanced certification Program in AI", 169, "ic_1"));
-        items.add(new Courses("Google Cloud Platform Architecture", 69, "ic_2"));
-        items.add(new Courses("Fundamental of Java Programming", 150, "ic_3"));
-        items.add(new Courses("Introduction to UI design history", 79, "ic_4"));
-        items.add(new Courses("PG Program in Big Data Engineering", 49, "ic_5"));
+        ArrayList<Lessions> items = new ArrayList<>();
+        items.add(new Lessions("Advanced certification Program in AI", 169, "ic_1"));
+        items.add(new Lessions("Google Cloud Platform Architecture", 69, "ic_2"));
+        items.add(new Lessions("Fundamental of Java Programming", 150, "ic_3"));
+        items.add(new Lessions("Introduction to UI design history", 79, "ic_4"));
+        items.add(new Lessions("PG Program in Big Data Engineering", 49, "ic_5"));
 
         recyclerViewCourse=findViewById(R.id.view);
         recyclerViewCourse.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-        adapterCourceList = new CoursesAdapter(items);
+        adapterCourceList = new LessionAdapter(items);
         recyclerViewCourse.setAdapter(adapterCourceList);
     }
 }

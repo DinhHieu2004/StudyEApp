@@ -2,7 +2,6 @@ package com.example.myapplication.activitys;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -10,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
 
-public class CourseDetailActivity extends AppCompatActivity {
+public class LessionDetailActivity extends AppCompatActivity {
 
     private boolean isExpanded = false;
 
@@ -36,7 +35,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         ImageView btnBack = findViewById(R.id.btnBack);
 
         btnBack.setOnClickListener(v -> {
-            Intent intent = new Intent(CourseDetailActivity.this, SceneLearnActivity.class);
+            Intent intent = new Intent(LessionDetailActivity.this, SceneLearnActivity.class);
             intent.putExtra("fragment_to_show", "scene_learn");
             startActivity(intent);
             finish();

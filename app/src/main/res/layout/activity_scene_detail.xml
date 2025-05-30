@@ -58,7 +58,7 @@
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
                 android:layout_marginTop="16dp"
-                android:src="@drawable/detail_courses1" />
+                android:src="@drawable/detail_lession1" />
 
             <!-- Description -->
             <LinearLayout

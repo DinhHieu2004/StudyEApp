@@ -13,28 +13,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
-import com.example.myapplication.model.Courses;
+import com.example.myapplication.model.Lessions;
 
 import java.util.ArrayList;
 
-public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.Viewholder> {
-    ArrayList<Courses> items;
+public class LessionAdapter extends RecyclerView.Adapter<LessionAdapter.Viewholder> {
+    ArrayList<Lessions> items;
     Context context;
 
-    public CoursesAdapter(ArrayList<Courses> items) {
+    public LessionAdapter(ArrayList<Lessions> items) {
         this.items = items;
     }
 
     @NonNull
     @Override
-    public CoursesAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public LessionAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View inflator = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_list,parent,false);
         context=parent.getContext();
         return new Viewholder(inflator);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CoursesAdapter.Viewholder holder, int position) {
+    public void onBindViewHolder(@NonNull LessionAdapter.Viewholder holder, int position) {
         holder.title.setText(items.get(position).getTitle());
         holder.price.setText("$"+items.get(position).getPrice());
 
