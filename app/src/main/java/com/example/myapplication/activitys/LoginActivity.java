@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.DTO.request.TokenRequest;
@@ -39,12 +40,15 @@ public class LoginActivity extends Fragment {
 
     public LoginActivity() {
     }
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.activity_login, container, false);
+    }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate layout for this fragment
-        View view = inflater.inflate(R.layout.activity_login, container, false);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         emailInput = view.findViewById(R.id.emailInput);
         passwordInput = view.findViewById(R.id.passwordInput);
@@ -59,8 +63,6 @@ public class LoginActivity extends Fragment {
             Intent intent = new Intent(getActivity(), SignUpActivity.class);
             startActivity(intent);
         });
-
-        return view;
     }
 
     private void loginUser() {
