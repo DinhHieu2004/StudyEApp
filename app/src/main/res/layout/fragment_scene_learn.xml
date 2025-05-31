@@ -102,7 +102,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="170dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/courses2" />
+                        android:src="@drawable/lession2" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -146,7 +146,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="170dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/courses3" />
+                        android:src="@drawable/lession3" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -200,7 +200,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="170dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/courses4" />
+                        android:src="@drawable/lession4" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -244,7 +244,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="170dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/courses5" />
+                        android:src="@drawable/lession5" />
 
                     <TextView
                         android:layout_width="match_parent"

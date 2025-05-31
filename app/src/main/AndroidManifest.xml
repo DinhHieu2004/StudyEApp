@@ -16,10 +16,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31" >
 
-        <activity
-            android:name=".activitys.CoursesListActivity"
-            android:exported="false" />
-        <activity android:name=".activitys.CourseDetailActivity"
+        <activity android:name=".activitys.LessionDetailActivity"
             android:exported="false" />
         <activity
             android:name=".activitys.IntroActivity"
