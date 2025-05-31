@@ -36,6 +36,11 @@ android {
     kotlinOptions {
         jvmTarget = "17" 
     }
+    packaging {
+        resources {
+            excludes += "/META-INF/DEPENDENCIES"
+        }
+    }
 }
 
 dependencies {
@@ -52,6 +57,7 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.12.0")
 
     implementation("com.android.volley:volley:1.2.1")
+    implementation("com.cloudinary:cloudinary-http44:1.34.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("org.apache.commons:commons-text:1.10.0")
