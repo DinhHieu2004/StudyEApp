@@ -7,15 +7,21 @@ public class LessionResponse {
     private String level;
     private String imageUrl;
 
+    private Long topicId;
+
+    private String topicName;
+
     public LessionResponse() {
     }
 
-    public LessionResponse(Long id, String title, String description, String level, String imageUrl) {
+    public LessionResponse(Long id, String title, String description, String level, String imageUrl, Long topicId, String topicName) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.level = level;
         this.imageUrl = imageUrl;
+        this.topicId = topicId;
+        this.topicName = topicName;
     }
 
     public Long getId() {
@@ -56,6 +62,22 @@ public class LessionResponse {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Long getTopicId() {
+        return topicId;
+    }
+
+    public void setTopicId(Long topicId) {
+        this.topicId = topicId;
+    }
+
+    public String getTopicName() {
+        return topicName;
+    }
+
+    public void setTopicName(String topicName) {
+        this.topicName = topicName;
     }
 }
 

@@ -39,7 +39,7 @@ public class SceneLearnAdapter extends RecyclerView.Adapter<SceneLearnAdapter.Sc
 
         holder.title.setText(scene.getTitle());
         holder.description.setText(scene.getDescription());
-        holder.tag.setText(scene.getLevel());
+        holder.tag.setText(scene.getTopicName());
 
         Glide.with(context)
                 .load(scene.getImageUrl())
