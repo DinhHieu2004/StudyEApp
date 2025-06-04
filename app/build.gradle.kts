@@ -2,9 +2,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
     id("com.google.gms.google-services")
 }
+
 
 android {
     namespace = "com.example.myapplication"
@@ -33,6 +33,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
 
     packaging {
         resources {
@@ -79,5 +84,4 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.14.0"))
     implementation("com.google.firebase:firebase-analytics")
 
-    kapt("com.github.bumptech.glide:compiler:4.12.0")
 }

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
 
     <application
         android:allowBackup="true"
@@ -16,17 +18,20 @@
         android:theme="@style/Theme.MyApplication"
         android:networkSecurityConfig="@xml/network_security_config"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31" >
+        tools:targetApi="31">
 
-        <activity android:name=".activitys.LessionDetailActivity"
+        <activity
+            android:name=".activitys.LessionDetailActivity"
             android:exported="false" />
         <activity
             android:name=".activitys.IntroActivity"
-            android:exported="false"/>
-        <activity android:name=".activitys.SceneLearnActivity"
-            android:exported="false"/>
-        <activity android:name=".activitys.AuthActivity"
-            android:exported="false"/>
+            android:exported="false" />
+        <activity
+            android:name=".activitys.SceneLearnActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.AuthActivity"
+            android:exported="true" />
 
         <activity
             android:name=".activitys.MainActivity"
@@ -37,16 +42,22 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activitys.QuizOptionsActivity" />
-        <activity android:name=".activitys.QuizQuestionActivity" />
-        <activity android:name=".activitys.ResultActivity" />
-        <activity android:name=".activitys.StatisticsActivity" />
-        <activity android:name=".activitys.QuizHistoryActivity" />
+        <activity
+            android:name=".activitys.QuizOptionsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.QuizQuestionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.ResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.QuizHistoryActivity"
+            android:exported="false" />
 
-
-
+        <activity
+            android:name=".activitys.StatisticsActivity"
+            android:exported="false" />
     </application>
-
-
 
 </manifest>
