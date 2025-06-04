@@ -16,14 +16,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31" >
 
-        <activity
-            android:name=".activitys.CoursesListActivity"
-            android:exported="true" >
-
-        </activity>
+        <activity android:name=".activitys.LessionDetailActivity"
+            android:exported="false" />
         <activity
             android:name=".activitys.IntroActivity"
             android:exported="false"/>
+        <activity android:name=".activitys.SceneLearnActivity"
+            android:exported="false"/>
+        <activity android:name=".activitys.AuthActivity"
+            android:exported="false"/>
+
         <activity
             android:name=".activitys.MainActivity"
             android:exported="true">

@@ -1,11 +1,11 @@
 package com.example.myapplication.model;
 
-public class Courses {
+public class Lessions {
     private String title;
     private int price;
     private String picPath;
 
-    public Courses(String title, int price, String picPath) {
+    public Lessions(String title, int price, String picPath) {
         this.title = title;
         this.price = price;
         this.picPath = picPath;
