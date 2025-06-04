@@ -14,6 +14,23 @@
          -->
 
     <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/bottom_btn1"
+        android:title="Home" />
+    <item
+        android:id="@+id/nav_learn"
+        android:icon="@drawable/bottom_btn2"
+        android:title="Learn" />
+    <item
+        android:id="@+id/nav_quiz"
+        android:icon="@drawable/bottom_btn3"
+        android:title="Quiz" />
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/bottom_btn4"
+        android:title="Profile" />
+
+    <item
         android:id="@+id/nav_statistics"
         android:icon="@drawable/ic_statistics"
         android:title="Thống kê" />

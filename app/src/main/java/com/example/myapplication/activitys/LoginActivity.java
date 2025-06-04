@@ -1,5 +1,7 @@
 package com.example.myapplication.activitys;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -91,6 +93,8 @@ public class LoginActivity extends Fragment {
                         if (user != null) {
                             user.getIdToken(true).addOnSuccessListener(result -> {
                                 String idToken = result.getToken();
+
+                                Log.i(TAG, "idToken: " + idToken);
                                 sendTokenToServer(idToken);
 
                             }).addOnFailureListener(e -> {
