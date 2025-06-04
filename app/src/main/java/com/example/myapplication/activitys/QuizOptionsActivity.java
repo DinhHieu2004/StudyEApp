@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class QuizOptionsActivity extends AppCompatActivity {
     private TextInputEditText edtAmount;
     private AutoCompleteTextView spinnerCategory, spinnerDifficulty, spinnerType;
     private MaterialButton btnStartQuiz;
+    private ImageButton btnStatistics, btnHistory;
     private ArrayList<String> categoryList = new ArrayList<>();
     private ArrayList<Integer> categoryIdList = new ArrayList<>();
     private ProgressBar progressBar;
@@ -61,9 +63,26 @@ public class QuizOptionsActivity extends AppCompatActivity {
         spinnerType = findViewById(R.id.spinnerType);
         btnStartQuiz = findViewById(R.id.btnStartQuiz);
 
+        btnHistory = findViewById(R.id.btnHistory);
+
+        btnStatistics = findViewById(R.id.btnStatistics);
+
+
         setupDifficultySpinner();
         setupTypeSpinner();
         fetchCategories();
+
+        btnStatistics.setOnClickListener(v -> {
+            Intent intent = new Intent(QuizOptionsActivity.this, StatisticsActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        });
+
+        btnHistory.setOnClickListener(v -> {
+            Intent intent = new Intent(QuizOptionsActivity.this, QuizHistoryActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        });
 
         btnStartQuiz.setOnClickListener(v -> {
             String amount = edtAmount.getText().toString().trim();
@@ -142,7 +161,7 @@ public class QuizOptionsActivity extends AppCompatActivity {
             options.add(r.getCorrectAnswer());
             Collections.shuffle(options);
 
-            result.add(new Question(r.getQuestion(), options, r.getCorrectAnswer()));
+            result.add(new Question(r.getQuestion(), options, r.getCorrectAnswer(), r.getCategory()));
         }
         return result;
     }

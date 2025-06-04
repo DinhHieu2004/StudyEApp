@@ -27,7 +27,7 @@ public class Question implements Serializable {
         }
         Collections.shuffle(this.options);
     }
-    public Question(String questionText, List<String> options, String correctAnswer) {
+    public Question(String questionText, List<String> options, String correctAnswer, String category) {
         this.questionText = StringEscapeUtils.unescapeHtml4(questionText);
         this.category = category;
         this.difficulty = StringEscapeUtils.unescapeHtml4(difficulty);
