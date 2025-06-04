@@ -1,30 +1,50 @@
 package com.example.myapplication.activitys;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
+import com.example.myapplication.fragments.HomeFragment;
+import com.example.myapplication.fragments.SceneLearnFragment;
+import com.example.myapplication.fragments.QuizFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    CardView cardBaiTap;
+    private void replaceFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .commit();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        cardBaiTap = findViewById(R.id.cardBaiTap);
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
 
-        cardBaiTap.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, QuizOptionsActivity.class);
-            startActivity(intent);
+        bottomNav.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_home) {
+                replaceFragment(new HomeFragment());
+                return true;
+            } else if (itemId == R.id.nav_learn) {
+                replaceFragment(new SceneLearnFragment());
+                return true;
+            } else if (itemId == R.id.nav_quiz) {
+                replaceFragment(new QuizFragment());
+                return true;
+            }
+            return false;
         });
+
+        if (savedInstanceState == null) {
+            bottomNav.setSelectedItemId(R.id.nav_home);
+        }
     }
-
-
 }
