@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@android:color/white">
+
+    <!-- Câu hỏi -->
+    <TextView
+        android:id="@+id/tvQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Câu hỏi"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:textSize="16sp" />
+
+    <!-- Đáp án -->
+    <TextView
+        android:id="@+id/tvAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đáp án: A"
+        android:textColor="#444444"
+        android:layout_marginTop="4dp"
+        android:textSize="14sp" />
+
+    <!-- Dòng "Xem tham khảo Gemini" -->
+    <TextView
+        android:id="@+id/tvGeminiReference"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Xem tham khảo Gemini"
+        android:textColor="#1E88E5"
+        android:textStyle="italic"
+        android:layout_marginTop="8dp"
+        android:textSize="14sp" />
+</LinearLayout>

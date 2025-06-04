@@ -2,6 +2,7 @@ package com.example.myapplication.activitys;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,11 +14,20 @@ import com.example.myapplication.DTO.Question;
 import com.example.myapplication.DTO.QuizResult;
 import com.example.myapplication.R;
 import com.example.myapplication.adapters.QuestionAdapter;
+import com.example.myapplication.services.ApiService;
+import com.example.myapplication.utils.ApiClient;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class QuizQuestionActivity extends AppCompatActivity {
 
@@ -72,7 +82,8 @@ public class QuizQuestionActivity extends AppCompatActivity {
             detail.setQuestionText(q.getQuestionText());
             detail.setOptions(q.getOptions());
             detail.setCorrectAnswer(q.getCorrectAnswer());
-            detail.setUserAnswer(userAnswer != null ? userAnswer : "Chưa trả lời");
+            detail.setCategory(q.getCategory());
+            detail.setUserAnswer(userAnswer != null ? userAnswer : "");
 
             answerDetails.add(detail);
         }
@@ -81,7 +92,9 @@ public class QuizQuestionActivity extends AppCompatActivity {
         result.setScore(score);
         result.setTotal(questionList.size());
         result.setDuration(duration);
-        result.setTimestamp(System.currentTimeMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault());
+        String isoTime = sdf.format(new Date());
+        result.setTimestamp(isoTime);
         result.setAnswers(answerDetails);
 
         Intent intent = new Intent(this, ResultActivity.class);
@@ -92,6 +105,26 @@ public class QuizQuestionActivity extends AppCompatActivity {
         intent.putExtra("duration", duration);
 
         startActivity(intent);
+
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<Void> call = apiService.saveQuizResult(result);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Log.d("QuizResult", "Submitted successfully!");
+                } else {
+                    Log.e("QuizResult", "Failed: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("QuizResult", "Error: " + t.getMessage());
+            }
+        });
+
     }
 
 

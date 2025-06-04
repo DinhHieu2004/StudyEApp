@@ -4,15 +4,13 @@ import java.io.Serializable;
 import java.util.List;
 
 public class QuizResult implements Serializable {
-    private String userId;
     private int score;
     private int total;
     private long duration;
-    private long timestamp;
+    private String timestamp;
     private List<AnswerDetail> answers;
 
-    public QuizResult(String userId, int score, int total, long duration, long timestamp, List<AnswerDetail> answers) {
-        this.userId = userId;
+    public QuizResult(int score, int total, long duration, String timestamp, List<AnswerDetail> answers) {
         this.score = score;
         this.total = total;
         this.duration = duration;
@@ -22,14 +20,6 @@ public class QuizResult implements Serializable {
 
     public QuizResult() {
 
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public int getScore() {
@@ -56,11 +46,11 @@ public class QuizResult implements Serializable {
         this.duration = duration;
     }
 
-    public long getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(long timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 

@@ -8,6 +8,7 @@ public class AnswerDetail implements Serializable {
         private List<String> options;
         private String correctAnswer;
         private String userAnswer;
+        private String category;
 
 
     public AnswerDetail(String questionText, List<String> options, String correctAnswer, String userAnswer) {
@@ -17,6 +18,14 @@ public class AnswerDetail implements Serializable {
         this.userAnswer = userAnswer;
     }
     public AnswerDetail(){}
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public String getQuestionText() {
         return questionText;
