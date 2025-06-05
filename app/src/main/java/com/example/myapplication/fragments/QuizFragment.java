@@ -105,7 +105,7 @@ public class QuizFragment extends Fragment {
             progressBar.setVisibility(View.VISIBLE);
             btnStartQuiz.setEnabled(false);
 
-            ApiService apiService = ApiClient.getClient().create(ApiService.class);
+            ApiService apiService = ApiClient.getClient(requireContext()).create(ApiService.class);
             Call<List<OpenTriviaQuestionResponse>> call = apiService.fetchQuestions(request);
 
             call.enqueue(new Callback<List<OpenTriviaQuestionResponse>>() {

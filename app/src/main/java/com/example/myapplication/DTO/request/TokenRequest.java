@@ -10,4 +10,11 @@ public class TokenRequest {
     public String getIdToken() {
         return idToken;
     }
+
+    @Override
+    public String toString() {
+        return "TokenRequest{" +
+                "idToken='" + idToken + '\'' +
+                '}';
+    }
 }

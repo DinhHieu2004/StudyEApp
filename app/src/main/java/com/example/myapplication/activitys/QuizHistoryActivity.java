@@ -65,7 +65,7 @@ public class QuizHistoryActivity extends AppCompatActivity {
         setupRecyclerView();
         setupClickListeners();
 
-        apiService = ApiClient.getClient().create(ApiService.class);
+        apiService = ApiClient.getClient(this).create(ApiService.class);
         fetchQuizHistory();
     }
 

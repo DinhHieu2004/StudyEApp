@@ -36,7 +36,7 @@ public class StatisticsRepository {
         this.context = context.getApplicationContext();
         AppDatabase database = AppDatabase.getDatabase(this.context);
         this.statisticsDao = database.statisticsDao();
-        this.apiService = ApiClient.getClient().create(ApiService.class);
+        this.apiService = ApiClient.getClient(this.context).create(ApiService.class);
         this.executor = Executors.newFixedThreadPool(2);
     }
 

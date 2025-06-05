@@ -111,7 +111,7 @@ public class QuizOptionsActivity extends AppCompatActivity {
             btnStartQuiz.setEnabled(false);
 
 
-            ApiService apiService = ApiClient.getClient().create(ApiService.class);
+            ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
             Call<List<OpenTriviaQuestionResponse>> call  = apiService.fetchQuestions(request);
 
             call.enqueue(new Callback<List<OpenTriviaQuestionResponse>>() {

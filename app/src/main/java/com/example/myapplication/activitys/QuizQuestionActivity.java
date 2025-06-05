@@ -106,7 +106,7 @@ public class QuizQuestionActivity extends AppCompatActivity {
 
         startActivity(intent);
 
-        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
         Call<Void> call = apiService.saveQuizResult(result);
 
         call.enqueue(new Callback<Void>() {

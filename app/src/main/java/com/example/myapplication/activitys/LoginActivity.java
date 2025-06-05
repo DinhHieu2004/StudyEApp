@@ -20,12 +20,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.DTO.request.TokenRequest;
+import com.example.myapplication.DTO.response.AuthenResponse;
 import com.example.myapplication.DTO.response.UserResponse;
 import com.example.myapplication.R;
 import com.example.myapplication.services.ApiService;
 import com.example.myapplication.utils.ApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
 
@@ -35,6 +38,7 @@ import retrofit2.Response;
 
 public class LoginActivity extends Fragment {
 
+    private static final org.apache.commons.logging.Log log = LogFactory.getLog(LoginActivity.class);
     private EditText emailInput, passwordInput;
     private Button loginButton;
     private TextView signUpText;
@@ -114,16 +118,23 @@ public class LoginActivity extends Fragment {
     }
 
     private void sendTokenToServer(String idToken) {
-        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        ApiService apiService = ApiClient.getClient(requireContext()).create(ApiService.class);
+      //  ApiService apiService = ApiClient.getClient().create(ApiService.class);
         TokenRequest tokenRequest = new TokenRequest(idToken);
-        Call<UserResponse> call = apiService.loginWithFirebaseToken(tokenRequest);
+        log.info("request: " + tokenRequest);
+        Call<AuthenResponse> call = apiService.loginWithFirebaseToken(tokenRequest);
 
-        call.enqueue(new Callback<UserResponse>() {
+        call.enqueue(new Callback<AuthenResponse>() {
             @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+            public void onResponse(Call<AuthenResponse> call, Response<AuthenResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    UserResponse user = response.body();
-                    saveUserLocally(user);
+                    AuthenResponse authResponse = response.body();
+                    String jwtToken = authResponse.getToken();
+
+                    log.info("jwtToken: " + jwtToken);
+
+                    // Lưu JWT token
+                    saveTokenLocally(jwtToken);
 
                     Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
 
@@ -132,29 +143,27 @@ public class LoginActivity extends Fragment {
                     startActivity(intent);
                     requireActivity().finish();
                 } else {
-//                    if (response.code() == 401) {
-//                        Toast.makeText(getActivity(), "Xác thực thất bại: Token không hợp lệ hoặc không tìm thấy người dùng", Toast.LENGTH_SHORT).show();
-//                    } else {
-                        String errorMessage = "Lỗi từ server: " + response.code();
-                        if (response.errorBody() != null) {
-                            try {
-                                errorMessage += "\n" + response.errorBody().string();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                    log.info("response: " + response.toString());
+
+                    String errorMessage = "Lỗi từ server: " + response.code();
+                    if (response.errorBody() != null) {
+                        try {
+                            errorMessage += "\n" + response.errorBody().string();
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
                     }
+                    Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
                 }
-//            }
+            }
 
             @Override
-            public void onFailure(retrofit2.Call<UserResponse> call, Throwable t) {
+            public void onFailure(retrofit2.Call<AuthenResponse> call, Throwable t) {
                 Toast.makeText(getActivity(), "Lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
-    private void saveUserLocally(UserResponse user) {
+    private void saveTokenLocally(String jwtToken) {
         if (!isAdded()) return;
 
         Context context = getContext();
@@ -162,14 +171,18 @@ public class LoginActivity extends Fragment {
 
         SharedPreferences prefs = context.getSharedPreferences("user_data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("uid", user.getUid());
-        editor.putString("email", user.getEmail());
-        editor.putString("name", user.getName());
+        editor.putString("jwt_token", jwtToken);
         editor.apply();
-
-        logout();
     }
 
+
+    private String getJwtToken() {
+        Context context = getContext();
+        if (context == null) return null;
+
+        SharedPreferences prefs = context.getSharedPreferences("user_data", Context.MODE_PRIVATE);
+        return prefs.getString("jwt_token", null);
+    }
 
     public void logout() {
         SharedPreferences prefs = requireActivity().getSharedPreferences("user_data", Context.MODE_PRIVATE);
@@ -181,6 +194,7 @@ public class LoginActivity extends Fragment {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         requireActivity().finish();
+        ApiClient.resetClient();
     }
 
 

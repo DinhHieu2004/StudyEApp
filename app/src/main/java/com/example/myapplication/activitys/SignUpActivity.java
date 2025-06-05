@@ -119,7 +119,7 @@ public class SignUpActivity extends Fragment {
     }
 
     private void sendUserToServer(String uid, String email, String name) {
-        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        ApiService apiService = ApiClient.getClient(requireContext()).create(ApiService.class);
         UserRequest userRequest = new UserRequest(uid, email, name);
 
         Call<Void> call = apiService.registerUser(userRequest);

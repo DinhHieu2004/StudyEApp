@@ -76,7 +76,7 @@ public class ResultActivity extends AppCompatActivity {
 
         // Thiết lập RecyclerView
 
-        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
 
         rvResults.setLayoutManager(new LinearLayoutManager(this));
         ResultAdapter adapter = new ResultAdapter(questions, userAnswers, apiService, getSupportFragmentManager(), progressBar2);
@@ -150,7 +150,6 @@ public class ResultActivity extends AppCompatActivity {
                 GeminiRequest request = new GeminiRequest(question.getQuestionText(), userAnswer);
                 Log.i("ResultAdapter", "Request: " + request.toString());
 
-                ApiService apiService = ApiClient.getClient().create(ApiService.class);
                 Call<GeminiResponse> call = apiService.getAnswerGemini(request);
 
                 call.enqueue(new Callback<GeminiResponse>() {
