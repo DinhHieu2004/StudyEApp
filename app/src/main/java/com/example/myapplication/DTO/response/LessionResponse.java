@@ -1,6 +1,8 @@
 package com.example.myapplication.DTO.response;
 
-public class LessionResponse {
+import java.io.Serializable;
+
+public class LessionResponse implements Serializable {
     private Long id;
     private String title;
     private String description;
