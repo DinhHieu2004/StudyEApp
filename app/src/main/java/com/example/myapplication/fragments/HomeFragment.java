@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadLessions() {
-        LessionApiService api = ApiClient.getClient().create(LessionApiService.class);
+        LessionApiService api = ApiClient.getClient(requireContext()).create(LessionApiService.class);
         Call<PageResponse<LessionResponse>> call = api.getLessions(1L, 0, 4);
 
         call.enqueue(new Callback<>() {
