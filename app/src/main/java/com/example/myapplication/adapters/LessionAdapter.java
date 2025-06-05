@@ -2,6 +2,7 @@ package com.example.myapplication.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +57,7 @@ public class LessionAdapter extends RecyclerView.Adapter<LessionAdapter.LessionV
         // click để mở chi tiết
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, LessionDetailActivity.class);
-            intent.putExtra("lessionId", lession.getId());
+            intent.putExtra("lession", lession);
             context.startActivity(intent);
         });
     }

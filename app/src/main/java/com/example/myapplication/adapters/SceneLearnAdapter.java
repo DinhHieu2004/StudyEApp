@@ -1,6 +1,8 @@
 package com.example.myapplication.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.DTO.response.LessionResponse;
 import com.example.myapplication.R;
+import com.example.myapplication.activitys.LessionDetailActivity;
 
 import java.util.List;
 
@@ -45,6 +48,13 @@ public class SceneLearnAdapter extends RecyclerView.Adapter<SceneLearnAdapter.Sc
                 .load(scene.getImageUrl())
                 .placeholder(R.drawable.placeholder_image)
                 .into(holder.image);
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, LessionDetailActivity.class);
+            intent.putExtra("lession", scene);
+            context.startActivity(intent);
+        });
+
     }
 
     @Override

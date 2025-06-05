@@ -44,7 +44,7 @@ public class SceneLearnFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.sceneLearnView);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2)); // 2 cột
-        adapter = new SceneLearnAdapter(getContext(), lessionList);
+        adapter = new SceneLearnAdapter(requireActivity(), lessionList);
         recyclerView.setAdapter(adapter);
 
         loadLessionsFromApi();
