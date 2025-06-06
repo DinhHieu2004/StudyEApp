@@ -1,28 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="4dp"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="4dp">
 
     <TextView
         android:id="@+id/tvPhonetic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#333"
-        android:textSize="16sp"
-        android:paddingEnd="8dp"/>
+        android:paddingEnd="8dp"
+        android:textColor="#000"
+        android:textSize="16sp" />
 
     <ImageButton
         android:id="@+id/btnPlayAudio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="48dp"
-        android:minHeight="48dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@android:drawable/ic_media_play"
-        android:contentDescription="Play audio"/>
-
+        android:contentDescription="Play audio"
+        android:padding="12dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/baseline_volume_up_24" />
 </LinearLayout>

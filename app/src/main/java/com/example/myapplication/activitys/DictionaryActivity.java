@@ -2,12 +2,7 @@ package com.example.myapplication.activitys;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -19,10 +14,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.DTO.response.DictionaryResponse;
+import com.example.myapplication.Entitys.HistorySearchWord;
 import com.example.myapplication.R;
 import com.example.myapplication.adapters.MeaningAdapter;
+import com.example.myapplication.fragments.SearchDictionaryFragment;
 import com.example.myapplication.services.ApiService;
 import com.example.myapplication.utils.ApiClient;
+import com.example.myapplication.utils.AppDatabase;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -34,8 +33,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 public class DictionaryActivity extends AppCompatActivity {
 
-    private EditText etSearch;
-    private ImageButton btnSearch;
     private TextView tvWord;
     private LinearLayout llPhonetics;
     private RecyclerView rvMeanings;
@@ -44,14 +41,20 @@ public class DictionaryActivity extends AppCompatActivity {
     private ApiService apiService;
     private MeaningAdapter meaningAdapter;
     private MediaPlayer mediaPlayer;
+    private DictionaryResponse currentResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dictionary);
 
-        etSearch = findViewById(R.id.etSearch);
-        btnSearch = findViewById(R.id.btnSearch);
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_search_dictionary, new SearchDictionaryFragment())
+                    .commit();
+        }
+
         tvWord = findViewById(R.id.tvWord);
         llPhonetics = findViewById(R.id.llPhonetics);
         rvMeanings = findViewById(R.id.rvMeanings);
@@ -61,38 +64,78 @@ public class DictionaryActivity extends AppCompatActivity {
 
         rvMeanings.setLayoutManager(new LinearLayoutManager(this));
 
-        btnSearch.setOnClickListener(v -> {
-            String keyword = etSearch.getText().toString().trim();
-            if (!keyword.isEmpty()) {
-                searchWord(keyword);
+        if (savedInstanceState != null) {
+            String json = savedInstanceState.getString("cached_response");
+            if (json != null) {
+                currentResponse = new Gson().fromJson(json, DictionaryResponse.class);
+                showResult(currentResponse);
+                return;
             }
-        });
+        }
+
+        String word = getIntent().getStringExtra("word");
+        if (word != null && !word.isEmpty()) {
+            searchWord(word);
+        } else {
+            tvWord.setText("Không có từ để tra");
+            Toast.makeText(this, "Không có từ để tra", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private void searchWord(String word) {
+    public void searchWord(String word) {
         progressBar.setVisibility(View.VISIBLE);
-        apiService.getWord(word).enqueue(new Callback<DictionaryResponse>() {
-            @Override
-            public void onResponse(Call<DictionaryResponse> call, Response<DictionaryResponse> response) {
-                progressBar.setVisibility(View.GONE);
-                if (response.isSuccessful() && response.body() != null) {
-                    showResult(response.body());
-                } else {
-                    Toast.makeText(DictionaryActivity.this, "Không tìm thấy từ", Toast.LENGTH_SHORT).show();
-                    clearUI();
-                }
-            }
 
-            @Override
-            public void onFailure(Call<DictionaryResponse> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                Toast.makeText(DictionaryActivity.this, "Lỗi mạng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                clearUI();
+        new Thread(() -> {
+            AppDatabase db = AppDatabase.getDatabase(DictionaryActivity.this);
+            HistorySearchWord history = db.historySearchWordDao().findByWord(word);
+
+            if (history != null) {
+                // Từ có trong db, parse JSON rồi hiển thị UI
+                String jsonData = history.getJsonData();
+                DictionaryResponse cachedResponse = new Gson().fromJson(jsonData, DictionaryResponse.class);
+
+                runOnUiThread(() -> {
+                    progressBar.setVisibility(View.GONE);
+                    showResult(cachedResponse);
+
+                });
+            } else {
+                // Từ chưa có, gọi API
+                runOnUiThread(() -> apiService.getWord(word).enqueue(new Callback<DictionaryResponse>() {
+                    @Override
+                    public void onResponse(Call<DictionaryResponse> call, Response<DictionaryResponse> response) {
+                        progressBar.setVisibility(View.GONE);
+                        if (response.isSuccessful() && response.body() != null) {
+                            DictionaryResponse responseBody = response.body();
+                            showResult(responseBody);
+
+                            // Lưu vào database trong thread khác
+                            new Thread(() -> {
+                                String json = new Gson().toJson(responseBody);
+                                HistorySearchWord newEntry = new HistorySearchWord(word, System.currentTimeMillis(), json);
+                                db.historySearchWordDao().insert(newEntry);
+                            }).start();
+
+                        } else {
+                            Toast.makeText(DictionaryActivity.this, "Không tìm thấy từ", Toast.LENGTH_SHORT).show();
+                            clearUI();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<DictionaryResponse> call, Throwable t) {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(DictionaryActivity.this, "Lỗi mạng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        clearUI();
+                    }
+                }));
             }
-        });
+        }).start();
     }
+
 
     private void showResult(DictionaryResponse dictionaryResponse) {
+        currentResponse = dictionaryResponse;
         String rawWord = dictionaryResponse.getWord();
         String decodedWord;
         try {
@@ -107,15 +150,24 @@ public class DictionaryActivity extends AppCompatActivity {
         llPhonetics.removeAllViews();
         if (dictionaryResponse.getPhonetics() != null) {
             for (DictionaryResponse.Phonetic phonetic : dictionaryResponse.getPhonetics()) {
-                View item = getLayoutInflater().inflate(R.layout.item_phonetic, llPhonetics, false);
-                TextView tvPhonetic = item.findViewById(R.id.tvPhonetic);
-                ImageButton btnPlay = item.findViewById(R.id.btnPlayAudio);
+                String audioUrl = phonetic.getAudio();
+                if (audioUrl != null && !audioUrl.isEmpty()) {
+                    View item = getLayoutInflater().inflate(R.layout.item_phonetic, llPhonetics, false);
 
-                tvPhonetic.setText(phonetic.getText());
+                    TextView tvPhonetic = item.findViewById(R.id.tvPhonetic);
+                    ImageButton btnPlay = item.findViewById(R.id.btnPlayAudio);
 
-                btnPlay.setOnClickListener(v -> playAudio(phonetic.getAudio()));
+                    if (phonetic.getText() != null && !phonetic.getText().isEmpty()) {
+                        tvPhonetic.setText(phonetic.getText());
+                        tvPhonetic.setVisibility(View.VISIBLE);
+                    } else {
+                        tvPhonetic.setVisibility(View.GONE);
+                    }
 
-                llPhonetics.addView(item);
+                    btnPlay.setOnClickListener(v -> playAudio(audioUrl));
+
+                    llPhonetics.addView(item);
+                }
             }
         }
 
@@ -158,6 +210,15 @@ public class DictionaryActivity extends AppCompatActivity {
         super.onDestroy();
         if (mediaPlayer != null) {
             mediaPlayer.release();
+        }
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (currentResponse != null) {
+            String json = new Gson().toJson(currentResponse);
+            outState.putString("cached_response", json);
         }
     }
 }
