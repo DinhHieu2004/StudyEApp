@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -114,6 +115,13 @@ public class DictionaryActivity extends AppCompatActivity {
                                 String json = new Gson().toJson(responseBody);
                                 HistorySearchWord newEntry = new HistorySearchWord(word, System.currentTimeMillis(), json);
                                 db.historySearchWordDao().insert(newEntry);
+
+                                runOnUiThread(() -> {
+                                    Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_search_dictionary);
+                                    if (fragment instanceof SearchDictionaryFragment) {
+                                        ((SearchDictionaryFragment) fragment).reloadHistoryDropdown();
+                                    }
+                                });
                             }).start();
 
                         } else {

@@ -72,10 +72,14 @@ public class SearchDictionaryFragment extends Fragment {
                 );
                 etSearch.setAdapter(adapter);
                 etSearch.setThreshold(0);
+                etSearch.setDropDownHeight(5 * dpToPx(48));
             });
         }).start();
     }
-
+    private int dpToPx(int dp) {
+        float density = getResources().getDisplayMetrics().density;
+        return Math.round(dp * density);
+    }
 
     private void search() {
         String keyword = etSearch.getText().toString().trim();
@@ -92,6 +96,26 @@ public class SearchDictionaryFragment extends Fragment {
             startActivity(intent);
         }
     }
+    public void reloadHistoryDropdown() {
+        new Thread(() -> {
+            List<String> updatedWords = historyDao.getAllWords();
+            requireActivity().runOnUiThread(() -> {
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                        requireContext(),
+                        R.layout.dropdown_item_search_dic_history,
+                        R.id.text1,
+                        updatedWords
+                );
+                etSearch.setAdapter(adapter);
+                etSearch.setThreshold(0);
+                int maxHeightInDp = 200;
+                float scale = getResources().getDisplayMetrics().density;
+                int maxHeightInPx = (int) (maxHeightInDp * scale + 0.5f);
+                etSearch.setDropDownHeight(maxHeightInPx);
+            });
+        }).start();
+    }
+
 
 }
 

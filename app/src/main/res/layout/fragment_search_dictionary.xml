@@ -13,6 +13,7 @@
         android:layout_height="36dp"
         android:layout_margin="14dp"
         android:layout_weight="1"
+        android:elevation="10dp"
         android:background="@drawable/bg_search_input"
         android:hint="Nhập từ cần tra"
         android:imeOptions="actionSearch"
