@@ -1,0 +1,25 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="4dp">
+
+    <TextView
+        android:id="@+id/tvPhonetic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="8dp"
+        android:textColor="#000"
+        android:textSize="16sp" />
+
+    <ImageButton
+        android:id="@+id/btnPlayAudio"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Play audio"
+        android:padding="12dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/baseline_volume_up_24" />
+</LinearLayout>

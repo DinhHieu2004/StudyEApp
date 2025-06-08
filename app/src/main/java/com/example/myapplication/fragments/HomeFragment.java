@@ -47,6 +47,13 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if (savedInstanceState == null) {
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_search_dictionary, new SearchDictionaryFragment())
+                    .commit();
+        }
+
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2)); // 2 cột
         adapter = new LessionAdapter(requireContext(), lessionList);

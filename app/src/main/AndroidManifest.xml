@@ -58,6 +58,9 @@
         <activity
             android:name=".activitys.StatisticsActivity"
             android:exported="false" />
+        <activity
+            android:name=".activitys.DictionaryActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
