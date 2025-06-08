@@ -98,11 +98,19 @@ public class SignUpActivity extends Fragment {
                                             String emailUser = user.getEmail();
                                             String displayName = name;
 
-                                            // Gửi về server
                                             sendUserToServer(uid, emailUser, displayName);
-
                                             Toast.makeText(getActivity(), "Đăng ký thành công", Toast.LENGTH_SHORT).show();
-                                            requireActivity().getSupportFragmentManager().popBackStack();
+
+                                            emailInput.setText("");
+                                            passwordInput.setText("");
+                                            confirmPasswordInput.setText("");
+                                            fullnameInput.setText("");
+
+                                            requireActivity().getSupportFragmentManager()
+                                                    .beginTransaction()
+                                                    .replace(R.id.fragmentContainer, new LoginActivity())
+                                                    .addToBackStack(null)
+                                                    .commit();
                                         } else {
                                             Toast.makeText(getActivity(), "Lỗi cập nhật tên người dùng", Toast.LENGTH_SHORT).show();
                                         }
@@ -127,7 +135,7 @@ public class SignUpActivity extends Fragment {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getActivity(), "Gửi thông tin user lên server thành công", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Đăng ký thành công", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "Lỗi server: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
