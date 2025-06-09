@@ -30,11 +30,11 @@
             android:name=".activitys.SceneLearnActivity"
             android:exported="false" />
         <activity
-            android:name=".activitys.AuthActivity"
-            android:exported="true" />
+            android:name=".activitys.MainActivity"
+            android:exported="false" />
 
         <activity
-            android:name=".activitys.MainActivity"
+            android:name=".activitys.AuthActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

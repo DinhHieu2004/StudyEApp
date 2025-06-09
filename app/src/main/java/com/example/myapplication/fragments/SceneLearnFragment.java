@@ -51,7 +51,7 @@ public class SceneLearnFragment extends Fragment {
     }
 
     private void loadLessionsFromApi() {
-        LessionApiService apiService = ApiClient.getClient().create(LessionApiService.class);
+        LessionApiService apiService = ApiClient.getClient(requireContext()).create(LessionApiService.class);
 
         Call<PageResponse<LessionResponse>> call = apiService.getLessions(1L, 0, 10); // topicId = 1
         call.enqueue(new Callback<PageResponse<LessionResponse>>() {

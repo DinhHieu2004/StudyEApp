@@ -87,7 +87,7 @@ public class LessionDetailActivity extends AppCompatActivity {
     }
 
     private void fetchDialogPreview(Long lessionId) {
-        Retrofit retrofit = ApiClient.getClient(); // bạn đã có ApiClient
+        Retrofit retrofit = ApiClient.getClient(this);
         DialogApiService api = retrofit.create(DialogApiService.class);
 
         api.getDialogsByLessionId(lessionId).enqueue(new Callback<List<DialogResponse>>() {
