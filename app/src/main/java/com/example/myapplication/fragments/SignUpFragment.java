@@ -1,4 +1,4 @@
-package com.example.myapplication.activitys;
+package com.example.myapplication.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,13 +25,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SignUpActivity extends Fragment {
+public class SignUpFragment extends Fragment {
 
     private EditText emailInput, passwordInput, confirmPasswordInput, fullnameInput;
     private Button signUpButton;
     private FirebaseAuth mAuth;
 
-    public SignUpActivity() {
+    public SignUpFragment() {
     }
 
     @Nullable
@@ -108,7 +108,7 @@ public class SignUpActivity extends Fragment {
 
                                             requireActivity().getSupportFragmentManager()
                                                     .beginTransaction()
-                                                    .replace(R.id.fragmentContainer, new LoginActivity())
+                                                    .replace(R.id.fragmentContainer, new LoginFragment())
                                                     .addToBackStack(null)
                                                     .commit();
                                         } else {

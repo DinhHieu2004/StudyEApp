@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.myapplication.R;
+import com.example.myapplication.fragments.LoginFragment;
+import com.example.myapplication.fragments.SignUpFragment;
 
 public class AuthActivity extends AppCompatActivity {
     private TextView loginTab, signupTab;
@@ -23,13 +25,13 @@ public class AuthActivity extends AppCompatActivity {
         loginTab = findViewById(R.id.loginTab);
         signupTab = findViewById(R.id.signupTab);
 
-        loadFragment(new LoginActivity());
+        loadFragment(new LoginFragment());
         setTabSelected(loginTab, signupTab);
 
         loginTab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new LoginActivity());
+                loadFragment(new LoginFragment());
                 setTabSelected(loginTab, signupTab);
             }
         });
@@ -37,7 +39,7 @@ public class AuthActivity extends AppCompatActivity {
         signupTab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new SignUpActivity());
+                loadFragment(new SignUpFragment());
                 setTabSelected(signupTab, loginTab);
             }
         });

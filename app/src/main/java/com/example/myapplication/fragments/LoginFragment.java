@@ -1,4 +1,4 @@
-package com.example.myapplication.activitys;
+package com.example.myapplication.fragments;
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,6 +24,8 @@ import androidx.fragment.app.Fragment;
 import com.example.myapplication.DTO.request.TokenRequest;
 import com.example.myapplication.DTO.response.AuthenResponse;
 import com.example.myapplication.R;
+import com.example.myapplication.activitys.AuthActivity;
+import com.example.myapplication.activitys.MainActivity;
 import com.example.myapplication.services.ApiService;
 import com.example.myapplication.utils.ApiClient;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -40,7 +42,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends Fragment {
+public class LoginFragment extends Fragment {
 
     private static final String TAG = "LoginActivity";
 
@@ -52,7 +54,7 @@ public class LoginActivity extends Fragment {
 
     private ActivityResultLauncher<Intent> googleSignInLauncher;
 
-    public LoginActivity() {
+    public LoginFragment() {
     }
 
     @Override
@@ -81,7 +83,6 @@ public class LoginActivity extends Fragment {
 
         mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
 
-        // Đăng ký launcher cho Google Sign-In
         googleSignInLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -99,7 +100,7 @@ public class LoginActivity extends Fragment {
         loginButton.setOnClickListener(v -> loginUser());
 
         signUpText.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), SignUpActivity.class);
+            Intent intent = new Intent(getActivity(), SignUpFragment.class);
             startActivity(intent);
         });
 
