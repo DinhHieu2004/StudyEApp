@@ -7,103 +7,112 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="24dp"
-        android:gravity="center_horizontal">
+        android:padding="24dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="Email"
             android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            android:layout_marginBottom="4dp" />
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/emailInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/login_background"
             android:hint="Enter your email"
             android:inputType="textEmailAddress"
             android:padding="12dp"
-            android:background="@drawable/login_background"
             android:textColor="#4A90E2"
-            android:textColorHint="#4A90E2"
-            android:layout_marginBottom="16dp" />
+            android:textColorHint="#4A90E2" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="Password"
             android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            android:layout_marginBottom="4dp" />
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/passwordInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/login_background"
             android:hint="Enter your password"
             android:inputType="textPassword"
             android:padding="12dp"
-            android:background="@drawable/login_background"
             android:textColor="#4A90E2"
-            android:textColorHint="#4A90E2"
-            android:layout_marginBottom="24dp" />
+            android:textColorHint="#4A90E2" />
 
         <Button
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Log In"
-            android:textSize="18sp"
             android:backgroundTint="#FFFFFF"
-            android:textColor="#4A90E2"
             android:padding="12dp"
+            android:text="Log In"
+            android:textColor="#4A90E2"
+            android:textSize="18sp"
             android:textStyle="bold" />
         <!-- Sign up text -->
         <TextView
             android:id="@+id/signUpText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
             android:text="Don't have an account? Sign up"
             android:textColor="#DDDDDD"
-            android:textSize="14sp"
-            android:layout_marginTop="24dp"
-            android:gravity="center"/>
+            android:textSize="14sp" />
         <!-- OR Divider -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="OR"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            android:layout_marginTop="12dp"
-            android:gravity="center"/>
-
-        <LinearLayout
             android:layout_marginTop="12dp"
             android:gravity="center"
-            android:orientation="horizontal"
+            android:text="OR"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:id="@+id/googleSignInBtn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="48dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/google_button_background"
+            android:clickable="true"
+            android:elevation="4dp"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
 
             <ImageView
-                android:id="@+id/googleSignInBtn"
-                android:src="@drawable/common_google_signin_btn_icon_dark_normal"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="8dp"
-            android:contentDescription="Sign in with Google"/>
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="Google Icon"
+                android:src="@drawable/common_google_signin_btn_icon_light_normal" />
 
-            <ImageView
-                android:id="@+id/facebookSignInBtn"
-                android:src="@drawable/common_google_signin_btn_icon_dark_normal"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="8dp"
-            android:contentDescription="Sign in with Facebook"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Sign in with Google"
+                android:textColor="#000000"
+                android:textSize="16sp" />
         </LinearLayout>
+
 
     </LinearLayout>
 </ScrollView>
