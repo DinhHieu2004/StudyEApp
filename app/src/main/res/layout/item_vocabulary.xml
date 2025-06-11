@@ -1,0 +1,118 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_vocabulary_card"
+    android:padding="16dp"
+    android:layout_marginVertical="6dp"
+    android:elevation="2dp">
+
+    <!-- Hàng đầu: Từ vựng + Phát âm + Bookmark -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/textWord"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="apple"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#000000"/>
+
+        <ImageView
+            android:id="@+id/btnPlayAudio"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/volume_up"
+            android:layout_marginEnd="12dp"/>
+
+        <ImageView
+            android:id="@+id/btnBookmark"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/star_border"/>
+    </LinearLayout>
+
+    <!-- Nghĩa và ví dụ -->
+    <TextView
+        android:id="@+id/textMeaning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(n): quả táo"
+        android:textSize="14sp"
+        android:textColor="#444444"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        android:id="@+id/textExample"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="→ I eat an apple every day."
+        android:textSize="13sp"
+        android:textColor="#777777"
+        android:layout_marginTop="2dp"/>
+
+    <!-- Nút xem thêm: nằm riêng dòng dưới cùng, căn phải -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:layout_marginTop="6dp">
+
+        <ImageView
+            android:id="@+id/btnViewDetail"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/read_more"/>
+    </LinearLayout>
+
+    <!-- Nội dung mở rộng (dropdown), ẩn mặc định -->
+    <LinearLayout
+        android:id="@+id/layoutExtraInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/textIPA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="IPA: /ˈæp.əl/"
+            android:textSize="14sp"
+            android:textColor="#666666" />
+
+        <TextView
+            android:id="@+id/textPartOfSpeech"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Part of speech: noun"
+            android:textSize="13sp"
+            android:textColor="#888888"
+            android:layout_marginTop="2dp" />
+
+        <TextView
+            android:id="@+id/textDefinition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Detailed definition..."
+            android:textSize="14sp"
+            android:textColor="#444444"
+            android:layout_marginTop="2dp" />
+
+        <TextView
+            android:id="@+id/textExtraExample"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Extra example"
+            android:textSize="13sp"
+            android:textColor="#777777"
+            android:layout_marginTop="2dp" />
+    </LinearLayout>
+</LinearLayout>

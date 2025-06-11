@@ -187,11 +187,11 @@
         android:paddingHorizontal="0dp">
 
         <android.widget.Button
-            android:id="@+id/btnBasicPractice"
+            android:id="@+id/btnVocabulary"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Basic Practice"
+            android:text="Vocabulary"
             android:textColor="@android:color/white"
             android:textAllCaps="false"
             android:textSize="17dp"
@@ -204,11 +204,11 @@
             android:background="#CCCCCC" />
 
         <android.widget.Button
-            android:id="@+id/btnAiPractice"
+            android:id="@+id/btnPractice"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="AI Practice"
+            android:text="Practice"
             android:textAllCaps="false"
             android:textSize="17dp"
             android:textColor="@android:color/white"
