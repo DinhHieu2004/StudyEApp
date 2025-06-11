@@ -3,8 +3,10 @@ package com.example.myapplication.activitys;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,6 +32,8 @@ public class LessionDetailActivity extends AppCompatActivity {
     private ImageView imageCourse;
     private TextView tagTopic, tagLevel;
 
+    private Button btnVocabulary, btnPractice;
+
     private Long lessionId;
 
     @Override
@@ -51,6 +55,8 @@ public class LessionDetailActivity extends AppCompatActivity {
         imageCourse = findViewById(R.id.imageCourse);
         tagTopic = findViewById(R.id.textTagTopic);
         tagLevel = findViewById(R.id.textTagLevel);
+        btnVocabulary = findViewById(R.id.btnVocabulary);
+        btnPractice = findViewById(R.id.btnPractice);
 
         textTitle.setText(lession.getTitle());
         textDescription.setText(lession.getDescription());
@@ -84,6 +90,18 @@ public class LessionDetailActivity extends AppCompatActivity {
 
         // Gọi API để lấy danh sách hội thoại
         fetchDialogPreview(lessionId);
+
+        // Xử lý btn học từ vựng
+        btnVocabulary.setOnClickListener(v -> {
+            Intent intent = new Intent(this, VocabularyActivity.class);
+            intent.putExtra("lessionId", lessionId);
+            startActivity(intent);
+        });
+
+        btnPractice.setOnClickListener(v -> {
+            Toast.makeText(this, "Practice feature coming soon...", Toast.LENGTH_SHORT).show();
+        });
+
     }
 
     private void fetchDialogPreview(Long lessionId) {
