@@ -255,24 +255,5 @@ public class LoginFragment extends Fragment {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("jwt_token", jwtToken);
         editor.apply();
-        logout();
-    }
-
-    public void logout() {
-        SharedPreferences prefs = requireActivity().getSharedPreferences("user_data", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.clear();
-        editor.apply();
-
-        mAuth.signOut();
-
-        mGoogleSignInClient.signOut();
-
-        Intent intent = new Intent(getActivity(), AuthActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        requireActivity().finish();
-
-        ApiClient.resetClient();
     }
 }
