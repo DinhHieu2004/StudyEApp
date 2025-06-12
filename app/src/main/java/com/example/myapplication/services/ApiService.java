@@ -12,7 +12,9 @@ import com.example.myapplication.DTO.request.TokenRequest;
 import com.example.myapplication.DTO.request.UserRequest;
 import com.example.myapplication.DTO.response.OpenTriviaQuestionResponse;
 import com.example.myapplication.DTO.response.StatisticsResponse;
+import com.example.myapplication.DTO.response.TopicResponse;
 import com.example.myapplication.DTO.response.UserResponse;
+import com.example.myapplication.DTO.response.VocabularyResponse;
 
 import java.util.List;
 
@@ -50,4 +52,14 @@ public interface ApiService {
     Call<GeminiResponse> getAnswerGemini(@Body GeminiRequest request);
     @GET("dictionary/lookup")
     Call<DictionaryResponse> getWord(@Query("word") String word);
+
+    @GET("topicVocabulary/list")
+    Call<List<TopicResponse>> getListTopic();
+
+    @GET("vocabulary/list")
+    Call<List<VocabularyResponse>> getVocabularyByTopic(@Query("topicId") int topicId);
+    @GET("auth/info")
+    Call<UserResponse> getUserProfile(@Query("uid")String uid);
+    @POST("auth/updateInfo")
+    Call<Void> updateUserProfile(@Body UserResponse updated);
 }

@@ -1,6 +1,7 @@
 package com.example.myapplication.activitys;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,8 +9,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
 import com.example.myapplication.fragments.HomeFragment;
+import com.example.myapplication.fragments.ProfileFragment;
 import com.example.myapplication.fragments.SceneLearnFragment;
 import com.example.myapplication.fragments.QuizFragment;
+import com.example.myapplication.fragments.SelectTopicFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,6 +23,18 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.fragmentContainer, fragment)
                 .commit();
     }
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+
+        boolean openProfileFragment = intent.getBooleanExtra("openProfileFragment", false);
+        if (openProfileFragment) {
+            BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
+            bottomNav.setSelectedItemId(R.id.nav_profile);
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +54,20 @@ public class MainActivity extends AppCompatActivity {
             } else if (itemId == R.id.nav_quiz) {
                 replaceFragment(new QuizFragment());
                 return true;
+            }else if (itemId == R.id.nav_profile) {
+                replaceFragment(new ProfileFragment());
+                return true;
             }
             return false;
         });
 
         if (savedInstanceState == null) {
-            bottomNav.setSelectedItemId(R.id.nav_home);
+            boolean openProfileFragment = getIntent().getBooleanExtra("openProfileFragment", false);
+            if (openProfileFragment) {
+                bottomNav.setSelectedItemId(R.id.nav_profile);
+            } else {
+                bottomNav.setSelectedItemId(R.id.nav_home);
+            }
         }
     }
 }
