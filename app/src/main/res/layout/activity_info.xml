@@ -1,0 +1,162 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/backIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/arrow_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cập nhật thông tin"
+                android:textSize="20sp"
+                android:layout_marginStart="40dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+        <!-- Email -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="Email"
+            android:textColor="#005B9B"
+            android:textSize="14sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:boxStrokeColor="#2196F3"
+            app:hintTextColor="#005B9B"
+            app:startIconDrawable="@android:drawable/ic_dialog_email"
+            app:startIconTint="#2196F3">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập email"
+                android:inputType="textEmailAddress"
+                android:paddingStart="48dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!-- Họ tên -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="Họ và tên"
+            android:textColor="#2196F3"
+            android:textSize="14sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:boxStrokeColor="#2196F3"
+            app:hintTextColor="#2196F3"
+            app:startIconDrawable="@android:drawable/ic_menu_edit"
+            app:startIconTint="#2196F3">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập họ và tên"
+                android:inputType="textPersonName"
+                android:paddingStart="48dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Ngày sinh -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="Ngày sinh"
+            android:textColor="#2196F3"
+            android:textSize="14sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:boxStrokeColor="#2196F3"
+            app:hintTextColor="#2196F3"
+            app:startIconDrawable="@android:drawable/ic_menu_my_calendar"
+            app:startIconTint="#2196F3">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editDob"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:hint="dd/MM/yyyy"
+                android:inputType="date"
+                android:paddingStart="48dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Số điện thoại -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="Số điện thoại"
+            android:textColor="#2196F3"
+            android:textSize="14sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:boxStrokeColor="#2196F3"
+            app:hintTextColor="#2196F3"
+            app:startIconDrawable="@android:drawable/ic_menu_call"
+            app:startIconTint="#2196F3">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập số điện thoại"
+                android:inputType="phone"
+                android:paddingStart="48dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Nút cập nhật -->
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#2196F3"
+            android:text="Cập nhật"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+</ScrollView>
