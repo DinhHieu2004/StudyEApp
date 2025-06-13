@@ -128,22 +128,48 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Estimated time -->
+            <!-- Listen time -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Estimated time:"
+                android:text="Listen dialogue:"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:layout_marginTop="16dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/audioPlayerBar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="5 minutes"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="12dp">
+
+                <!-- Nút Play -->
+                <ImageButton
+                    android:id="@+id/btnAudioPlay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/play_record"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Play" />
+
+                <!-- SeekBar -->
+                <SeekBar
+                    android:id="@+id/audioSeekBar"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp" />
+
+                <!-- Thời gian -->
+                <TextView
+                    android:id="@+id/audioTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:00"
+                    android:textSize="12sp" />
+            </LinearLayout>
 
             <!-- Dialogue -->
             <TextView
@@ -208,7 +234,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Practice"
+            android:text="Speaking"
             android:textAllCaps="false"
             android:textSize="17dp"
             android:textColor="@android:color/white"
