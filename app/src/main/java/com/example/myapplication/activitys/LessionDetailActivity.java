@@ -1,9 +1,10 @@
 package com.example.myapplication.activitys;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -21,6 +22,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.services.DialogApiService;
 import com.example.myapplication.utils.ApiClient;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -32,29 +34,24 @@ import retrofit2.Retrofit;
 
 public class LessionDetailActivity extends AppCompatActivity {
 
-    private boolean isExpanded = false;
     private TextView textDialogue, btnMore;
     private TextView textTitle, textDescription;
     private ImageView imageCourse;
     private TextView tagTopic, tagLevel;
-
-    private TextToSpeech tts;
-    private boolean isSpeaking = false;
-    private Handler handler = new Handler();
-    private Runnable updateSeekBarRunnable;
-
+    private ImageButton btnAudioPlay;
     private SeekBar audioSeekBar;
     private TextView audioTime;
     private Button btnVocabulary, btnPractice;
 
-    private ImageButton btnAudioPlay;
+    private boolean isExpanded = false;
+    private boolean isPlaying = false;
+    private Handler handler = new Handler();
+    private Runnable updateSeekBarRunnable;
 
     private Long lessionId;
+    private MediaPlayer mediaPlayer;
 
     private List<DialogLine> dialogLines = new ArrayList<>();
-
-    private float currentPitch = 1.2f;
-
 
     private static class DialogLine {
         String speaker;
@@ -71,25 +68,29 @@ public class LessionDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scene_detail);
 
-        // Nhận LessionResponse từ Intent
-        LessionResponse lession = (LessionResponse) getIntent().getSerializableExtra("lession");
-        if (lession == null) {
-            finish(); // không có dữ liệu thì thoát
-            return;
-        }
-
-        // Gán dữ liệu bài học
-        lessionId = lession.getId();
+        // View mapping
+        textDialogue = findViewById(R.id.textDialogue);
+        btnMore = findViewById(R.id.btnMore);
         textTitle = findViewById(R.id.textTitle);
         textDescription = findViewById(R.id.textDescription);
         imageCourse = findViewById(R.id.imageCourse);
         tagTopic = findViewById(R.id.textTagTopic);
         tagLevel = findViewById(R.id.textTagLevel);
-        btnVocabulary = findViewById(R.id.btnVocabulary);
-        btnPractice = findViewById(R.id.btnPractice);
         btnAudioPlay = findViewById(R.id.btnAudioPlay);
         audioSeekBar = findViewById(R.id.audioSeekBar);
         audioTime = findViewById(R.id.audioTime);
+        btnVocabulary = findViewById(R.id.btnVocabulary);
+        btnPractice = findViewById(R.id.btnPractice);
+
+        LessionResponse lession = (LessionResponse) getIntent().getSerializableExtra("lession");
+        String audioUrl = lession.getAudioUrl();
+
+        if (lession == null) {
+            finish();
+            return;
+        }
+
+        lessionId = lession.getId();
         textTitle.setText(lession.getTitle());
         textDescription.setText(lession.getDescription());
         tagTopic.setText(lession.getTopicName());
@@ -100,81 +101,97 @@ public class LessionDetailActivity extends AppCompatActivity {
                 .placeholder(R.drawable.placeholder_image)
                 .into(imageCourse);
 
-        // Xử lý nút quay lại
-        findViewById(R.id.btnBack).setOnClickListener(v -> {
-            finish(); // trở lại màn trước
-        });
-
-        // Xử lý More / Less cho đoạn hội thoại
-        textDialogue = findViewById(R.id.textDialogue);
-        btnMore = findViewById(R.id.btnMore);
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
 
         btnMore.setOnClickListener(v -> {
             isExpanded = !isExpanded;
-            if (isExpanded) {
-                textDialogue.setMaxLines(Integer.MAX_VALUE);
-                btnMore.setText("Less");
-            } else {
-                textDialogue.setMaxLines(4);
-                btnMore.setText("More...");
-            }
+            textDialogue.setMaxLines(isExpanded ? Integer.MAX_VALUE : 4);
+            btnMore.setText(isExpanded ? "Less" : "More...");
         });
 
-        // Gọi API để lấy danh sách hội thoại
         fetchDialogPreview(lessionId);
 
-        // Xử lý btn học từ vựng
         btnVocabulary.setOnClickListener(v -> {
             Intent intent = new Intent(this, VocabularyActivity.class);
             intent.putExtra("lessionId", lessionId);
             startActivity(intent);
         });
 
-        btnPractice.setOnClickListener(v -> {
-            Toast.makeText(this, "Practice feature coming soon...", Toast.LENGTH_SHORT).show();
-        });
+        btnPractice.setOnClickListener(v -> Toast.makeText(this, "Practice feature coming soon...", Toast.LENGTH_SHORT).show());
 
-        // text to speak dialog
-        tts = new TextToSpeech(this, status -> {
-            if (status == TextToSpeech.SUCCESS) {
-                tts.setLanguage(Locale.US);
+        btnAudioPlay.setOnClickListener(v -> {
+            if (mediaPlayer == null) {
+                if (audioUrl == null || audioUrl.isEmpty()) {
+                    Toast.makeText(this, "Không có audio cho bài học này", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Uri audioUri = Uri.parse(audioUrl);
+                mediaPlayer = new MediaPlayer();
+                try {
+                    mediaPlayer.setDataSource(this, audioUri);
+                    mediaPlayer.setOnPreparedListener(mp -> {
+                        audioSeekBar.setMax(mediaPlayer.getDuration());
+                        mediaPlayer.start();
+                        isPlaying = true;
+                        btnAudioPlay.setImageResource(R.drawable.pause_record);
+                        startSeekBarTimer();
+                    });
+                    mediaPlayer.setOnCompletionListener(mp -> {
+                        btnAudioPlay.setImageResource(R.drawable.play_record);
+                        isPlaying = false;
+                    });
+                    mediaPlayer.prepareAsync();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Could not play audio", Toast.LENGTH_SHORT).show();
+                }
+            } else if (isPlaying) {
+                mediaPlayer.pause();
+                isPlaying = false;
+                btnAudioPlay.setImageResource(R.drawable.play_record);
+            } else {
+                mediaPlayer.start();
+                isPlaying = true;
+                btnAudioPlay.setImageResource(R.drawable.pause_record);
+                startSeekBarTimer();
             }
         });
 
-        // Xử lý khi bấm nút Play/Pause
-        btnAudioPlay.setOnClickListener(v -> {
-            if (isSpeaking) {
-                tts.stop();
-                isSpeaking = false;
-                btnAudioPlay.setImageResource(R.drawable.play_record);
-            } else {
-                if (!dialogLines.isEmpty()) {
-                    isSpeaking = true;
-                    btnAudioPlay.setImageResource(R.drawable.pause_record);
-                    speakDialogLinesSequentially(dialogLines, 0);
-                } else {
-                    Toast.makeText(this, "No dialogue found to speak", Toast.LENGTH_SHORT).show();
+        audioSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (fromUser && mediaPlayer != null) {
+                    mediaPlayer.seekTo(progress);
+                    audioTime.setText(formatTime(progress));
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                    mediaPlayer.pause();
+                }
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
+                    mediaPlayer.start();
                 }
             }
         });
+
     }
 
-    private void updateSeekBar(int totalDuration) {
+    private void startSeekBarTimer() {
         updateSeekBarRunnable = new Runnable() {
-            int currentProgress = 0;
-
             @Override
             public void run() {
-                if (isSpeaking && currentProgress <= totalDuration) {
-                    audioSeekBar.setProgress(currentProgress);
-                    audioTime.setText(formatTime(currentProgress));
-                    currentProgress += 500;
+                if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                    int currentPos = mediaPlayer.getCurrentPosition();
+                    audioSeekBar.setProgress(currentPos);
+                    audioTime.setText(formatTime(currentPos));
                     handler.postDelayed(this, 500);
-                } else {
-                    isSpeaking = false;
-                    btnAudioPlay.setImageResource(R.drawable.pause_record);
-                    audioSeekBar.setProgress(0);
-                    audioTime.setText("00:00");
                 }
             }
         };
@@ -187,47 +204,6 @@ public class LessionDetailActivity extends AppCompatActivity {
         return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
     }
 
-    private int estimateDuration(String text) {
-        int wordCount = text.trim().split("\\s+").length;
-        return wordCount * 500;
-    }
-
-    private void speakDialogLinesSequentially(List<DialogLine> lines, int index) {
-        if (index >= lines.size()) {
-            isSpeaking = false;
-            btnAudioPlay.setImageResource(R.drawable.play_record);
-            return;
-        }
-
-        DialogLine line = lines.get(index);
-
-        if (index > 0) {
-            String prevSpeaker = lines.get(index - 1).speaker;
-            if (!line.speaker.equalsIgnoreCase(prevSpeaker)) {
-                currentPitch = (currentPitch == 1.2f) ? 0.9f : 1.2f;
-            }
-        }
-
-        tts.setPitch(currentPitch);
-        tts.speak(line.content, TextToSpeech.QUEUE_FLUSH, null, "LINE_" + index);
-
-        int duration = estimateDuration(line.content);
-        handler.postDelayed(() -> speakDialogLinesSequentially(lines, index + 1), duration + 500);
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (tts != null) {
-            tts.stop();
-            tts.shutdown();
-        }
-        if (handler != null && updateSeekBarRunnable != null) {
-            handler.removeCallbacks(updateSeekBarRunnable);
-        }
-        super.onDestroy();
-    }
-
-
     private void fetchDialogPreview(Long lessionId) {
         Retrofit retrofit = ApiClient.getClient(this);
         DialogApiService api = retrofit.create(DialogApiService.class);
@@ -236,15 +212,12 @@ public class LessionDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<DialogResponse>> call, Response<List<DialogResponse>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<DialogResponse> dialogs = response.body();
                     dialogLines.clear();
-
                     StringBuilder preview = new StringBuilder();
-                    for (DialogResponse d : dialogs) {
+                    for (DialogResponse d : response.body()) {
                         dialogLines.add(new DialogLine(d.getSpeaker(), d.getContent()));
                         preview.append(d.getSpeaker()).append(": ").append(d.getContent()).append("\n");
                     }
-
                     textDialogue.setText(preview.toString().trim());
                 }
             }
@@ -255,6 +228,15 @@ public class LessionDetailActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+        }
+        if (handler != null && updateSeekBarRunnable != null) {
+            handler.removeCallbacks(updateSeekBarRunnable);
+        }
+        super.onDestroy();
+    }
 }
-
-

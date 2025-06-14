@@ -9,6 +9,8 @@ public class LessionResponse implements Serializable {
     private String level;
     private String imageUrl;
 
+    private String audioUrl;
+
     private Long topicId;
 
     private String topicName;
@@ -16,12 +18,13 @@ public class LessionResponse implements Serializable {
     public LessionResponse() {
     }
 
-    public LessionResponse(Long id, String title, String description, String level, String imageUrl, Long topicId, String topicName) {
+    public LessionResponse(Long id, String title, String description, String level, String imageUrl, String audioUrl, Long topicId, String topicName) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.level = level;
         this.imageUrl = imageUrl;
+        this.audioUrl = audioUrl;
         this.topicId = topicId;
         this.topicName = topicName;
     }
@@ -40,6 +43,14 @@ public class LessionResponse implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getAudioUrl() {
+        return audioUrl;
+    }
+
+    public void setAudioUrl(String audioUrl) {
+        this.audioUrl = audioUrl;
     }
 
     public String getDescription() {
