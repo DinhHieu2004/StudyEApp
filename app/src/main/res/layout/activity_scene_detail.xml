@@ -37,7 +37,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Grocery Shopping"
+                    android:text="Title"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:textColor="#4A90E2"
@@ -58,7 +58,7 @@
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
                 android:layout_marginTop="16dp"
-                android:src="@drawable/detail_lession1" />
+                android:src="@drawable/placeholder_image" />
 
             <!-- Description -->
             <LinearLayout
@@ -71,7 +71,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4"
+                    android:layout_weight="3.5"
                     android:orientation="vertical">
 
                     <TextView
@@ -86,7 +86,7 @@
                         android:id="@+id/textDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="In a grocery store, students learn how to ask about prices, locate items, and discuss payment methods."
+                        android:text="This is a sample description."
                         android:textSize="14sp"
                         android:textColor="#2C3E50"
                         android:lineSpacingExtra="4dp"
@@ -96,15 +96,16 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:orientation="vertical"
                     android:gravity="end"
                     android:layout_marginStart="8dp">
 
                     <TextView
+                        android:id="@+id/textTagTopic"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Daily Life"
+                        android:text="Topic"
                         android:background="@drawable/bg_course_tag"
                         android:textColor="#1976D2"
                         android:textStyle="bold"
@@ -114,9 +115,10 @@
                         android:layout_marginBottom="6dp" />
 
                     <TextView
+                        android:id="@+id/textTagLevel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Beginner"
+                        android:text="Level"
                         android:background="@drawable/bg_course_tag"
                         android:textColor="#1976D2"
                         android:textStyle="bold"
@@ -126,22 +128,48 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Estimated time -->
+            <!-- Listen time -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Estimated time:"
+                android:text="Listen dialogue:"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:layout_marginTop="16dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/audioPlayerBar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="5 minutes"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="12dp">
+
+                <!-- Nút Play -->
+                <ImageButton
+                    android:id="@+id/btnAudioPlay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/play_record"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Play" />
+
+                <!-- SeekBar -->
+                <SeekBar
+                    android:id="@+id/audioSeekBar"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp" />
+
+                <!-- Thời gian -->
+                <TextView
+                    android:id="@+id/audioTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:00"
+                    android:textSize="12sp" />
+            </LinearLayout>
 
             <!-- Dialogue -->
             <TextView
@@ -156,7 +184,6 @@
                 android:id="@+id/textDialogue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/dialogue_example"
                 android:maxLines="4"
                 android:ellipsize="end"
                 android:textColor="@color/black"
@@ -186,11 +213,11 @@
         android:paddingHorizontal="0dp">
 
         <android.widget.Button
-            android:id="@+id/btnBasicPractice"
+            android:id="@+id/btnVocabulary"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Basic Practice"
+            android:text="Vocabulary"
             android:textColor="@android:color/white"
             android:textAllCaps="false"
             android:textSize="17dp"
@@ -203,11 +230,11 @@
             android:background="#CCCCCC" />
 
         <android.widget.Button
-            android:id="@+id/btnAiPractice"
+            android:id="@+id/btnPractice"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="AI Practice"
+            android:text="Speaking"
             android:textAllCaps="false"
             android:textSize="17dp"
             android:textColor="@android:color/white"

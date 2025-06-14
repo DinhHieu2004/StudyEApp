@@ -12,7 +12,7 @@ import com.example.myapplication.fragments.HomeFragment;
 import com.example.myapplication.fragments.ProfileFragment;
 import com.example.myapplication.fragments.SceneLearnFragment;
 import com.example.myapplication.fragments.QuizFragment;
-import com.example.myapplication.fragments.SelectTopicFragment;
+//import com.example.myapplication.fragments.SelectTopicFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

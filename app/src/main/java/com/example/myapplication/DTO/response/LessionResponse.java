@@ -1,21 +1,32 @@
 package com.example.myapplication.DTO.response;
 
-public class LessionResponse {
+import java.io.Serializable;
+
+public class LessionResponse implements Serializable {
     private Long id;
     private String title;
     private String description;
     private String level;
     private String imageUrl;
 
+    private String audioUrl;
+
+    private Long topicId;
+
+    private String topicName;
+
     public LessionResponse() {
     }
 
-    public LessionResponse(Long id, String title, String description, String level, String imageUrl) {
+    public LessionResponse(Long id, String title, String description, String level, String imageUrl, String audioUrl, Long topicId, String topicName) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.level = level;
         this.imageUrl = imageUrl;
+        this.audioUrl = audioUrl;
+        this.topicId = topicId;
+        this.topicName = topicName;
     }
 
     public Long getId() {
@@ -32,6 +43,14 @@ public class LessionResponse {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getAudioUrl() {
+        return audioUrl;
+    }
+
+    public void setAudioUrl(String audioUrl) {
+        this.audioUrl = audioUrl;
     }
 
     public String getDescription() {
@@ -56,6 +75,22 @@ public class LessionResponse {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Long getTopicId() {
+        return topicId;
+    }
+
+    public void setTopicId(Long topicId) {
+        this.topicId = topicId;
+    }
+
+    public String getTopicName() {
+        return topicName;
+    }
+
+    public void setTopicName(String topicName) {
+        this.topicName = topicName;
     }
 }
 

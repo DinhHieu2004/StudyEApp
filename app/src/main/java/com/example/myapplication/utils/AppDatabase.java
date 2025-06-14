@@ -17,7 +17,7 @@ import com.example.myapplication.Entitys.StatisticsEntity;
 
 @Database(
         entities = {StatisticsEntity.class, CategoryStatsEntity.class, ProgressStatsEntity.class, HistorySearchWord.class},
-        version = 1,
+        version = 2,
         exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {

@@ -2,6 +2,7 @@ package com.example.myapplication.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,16 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.DTO.response.LessionResponse;
 import com.example.myapplication.R;
 import com.example.myapplication.activitys.LessionDetailActivity;
-import com.example.myapplication.model.Lessions;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LessionAdapter extends RecyclerView.Adapter<LessionAdapter.LessionViewHolder> {
@@ -44,7 +42,7 @@ public class LessionAdapter extends RecyclerView.Adapter<LessionAdapter.LessionV
 
         holder.titleText.setText(lession.getTitle());
         holder.descText.setText(lession.getDescription());
-        holder.tagText.setText(lession.getLevel());
+        holder.tagText.setText(lession.getTopicName());
 
         // Load ảnh nếu có URL
         if (lession.getImageUrl() != null && !lession.getImageUrl().isEmpty()) {
@@ -59,7 +57,7 @@ public class LessionAdapter extends RecyclerView.Adapter<LessionAdapter.LessionV
         // click để mở chi tiết
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, LessionDetailActivity.class);
-            intent.putExtra("lessionId", lession.getId());
+            intent.putExtra("lession", lession);
             context.startActivity(intent);
         });
     }

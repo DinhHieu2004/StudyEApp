@@ -12,7 +12,7 @@ import com.example.myapplication.DTO.request.TokenRequest;
 import com.example.myapplication.DTO.request.UserRequest;
 import com.example.myapplication.DTO.response.OpenTriviaQuestionResponse;
 import com.example.myapplication.DTO.response.StatisticsResponse;
-import com.example.myapplication.DTO.response.TopicResponse;
+//import com.example.myapplication.DTO.response.TopicResponse;
 import com.example.myapplication.DTO.response.UserResponse;
 import com.example.myapplication.DTO.response.VocabularyResponse;
 
@@ -53,8 +53,8 @@ public interface ApiService {
     @GET("dictionary/lookup")
     Call<DictionaryResponse> getWord(@Query("word") String word);
 
-    @GET("topicVocabulary/list")
-    Call<List<TopicResponse>> getListTopic();
+//    @GET("topicVocabulary/list")
+//    Call<List<TopicResponse>> getListTopic();
 
     @GET("vocabulary/list")
     Call<List<VocabularyResponse>> getVocabularyByTopic(@Query("topicId") int topicId);
