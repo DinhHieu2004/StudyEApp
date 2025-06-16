@@ -3,6 +3,7 @@ package com.example.myapplication.fragments;
 import androidx.fragment.app.Fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -192,10 +193,12 @@ public class QuizFragment extends Fragment {
 
     private void fetchCategories() {
         String url = "https://opentdb.com/api_category.php";
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(requireContext());
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
+                    if (!isAdded()) return;
+
                     try {
                         categoryList.add("Trộn");
                         categoryIdList.add(0);
@@ -207,19 +210,31 @@ public class QuizFragment extends Fragment {
                             categoryIdList.add(cat.getInt("id"));
                         }
 
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
-                                android.R.layout.simple_dropdown_item_1line, categoryList);
-                        spinnerCategory.setAdapter(adapter);
+                        Context context = getContext();
+                        if (context != null) {
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                                    context,
+                                    android.R.layout.simple_dropdown_item_1line,
+                                    categoryList
+                            );
 
-                        spinnerCategory.setText(categoryList.get(0), false);
+                            spinnerCategory.setAdapter(adapter);
+                            spinnerCategory.setText(categoryList.get(0), false);
+                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        Toast.makeText(getContext(), "Lỗi khi xử lý dữ liệu", Toast.LENGTH_SHORT).show();
+                        if (getContext() != null)
+                            Toast.makeText(getContext(), "Lỗi khi xử lý dữ liệu", Toast.LENGTH_SHORT).show();
                     }
                 },
-                error -> Toast.makeText(getContext(), "Lỗi kết nối API", Toast.LENGTH_SHORT).show()
+                error -> {
+                    if (getContext() != null)
+                        Toast.makeText(getContext(), "Lỗi kết nối API", Toast.LENGTH_SHORT).show();
+                }
         );
 
         queue.add(request);
     }
+
 }

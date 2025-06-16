@@ -22,9 +22,10 @@ import com.example.myapplication.Entitys.StatisticsEntity;
 @Database(
         entities = {StatisticsEntity.class, CategoryStatsEntity.class, ProgressStatsEntity.class,
                 QuizResultEntity.class,
-                AnswerDetailEntity.class
+                AnswerDetailEntity.class,
+                HistorySearchWord.class
         },
-        version = 1,
+        version = 3,
         exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {
