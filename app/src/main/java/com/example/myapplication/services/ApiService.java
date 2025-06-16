@@ -11,17 +11,28 @@ import com.example.myapplication.DTO.response.GeminiResponse;
 import com.example.myapplication.DTO.request.TokenRequest;
 import com.example.myapplication.DTO.request.UserRequest;
 import com.example.myapplication.DTO.response.OpenTriviaQuestionResponse;
+import com.example.myapplication.DTO.response.PartProgressDTO;
+import com.example.myapplication.DTO.response.PhonemeResponse;
+import com.example.myapplication.DTO.response.SentencePartResponse;
 import com.example.myapplication.DTO.response.StatisticsResponse;
 //import com.example.myapplication.DTO.response.TopicResponse;
 import com.example.myapplication.DTO.response.UserResponse;
 import com.example.myapplication.DTO.response.VocabularyResponse;
+import com.example.myapplication.model.PartProgress;
+import com.example.myapplication.model.Sentence;
+import com.example.myapplication.model.TextRequest;
+import com.example.myapplication.model.UserProgress;
+import com.example.myapplication.model.UserProgressForPronounce;
 
 import java.util.List;
+import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
@@ -62,4 +73,31 @@ public interface ApiService {
     Call<UserResponse> getUserProfile(@Query("uid")String uid);
     @POST("auth/updateInfo")
     Call<Void> updateUserProfile(@Body UserResponse updated);
+
+    @GET("sentence/part")
+    Call<SentencePartResponse> getPart(@Query("level") String level);
+
+    @GET("sentence")
+   // Call<SentencePartResponse> getSentence(@Query("level") String level, @Query("part") String part );
+    Call<List<Sentence>> getSentence(@Query("level") String level, @Query("part") String part);
+
+    @POST("/api/phonemize")
+    Call<PhonemeResponse> getPhonemes(@Body TextRequest request);
+
+    // Lưu kết quả từng câu
+    @POST("api/practice/save-result")
+    Call<ResponseBody> savePracticeResult(@Body UserProgressForPronounce progress);
+
+    // Lấy tiến độ của user cho part cụ thể
+    @GET("api/practice/progress/{partId}")
+    Call<PartProgressDTO> getPartProgress(@Path("partId") int partId, @Query("level") String level);
+
+    // Lấy danh sách câu chưa hoàn thành
+    @GET("api/practice/incomplete-sentences/{partId}")
+    Call<List<Sentence>> getIncompleteSentences(@Path("partId") int partId, @Query("level") String level);
+
+    // Cập nhật tiến độ part
+    @POST("api/practice/update-progress")
+    Call<PartProgressDTO> updatePartProgress(@Body Map<String, Object> progressData);
+
 }

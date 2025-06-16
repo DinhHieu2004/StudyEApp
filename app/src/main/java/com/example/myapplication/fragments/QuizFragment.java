@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -50,7 +52,7 @@ public class QuizFragment extends Fragment {
     private TextInputEditText edtAmount;
     private AutoCompleteTextView spinnerCategory, spinnerDifficulty, spinnerType;
     private MaterialButton btnStartQuiz;
-    private ImageButton btnStatistics, btnHistory;
+    private ImageButton btnStatistics, btnHistory, btnPronounce;
     private ArrayList<String> categoryList = new ArrayList<>();
     private ArrayList<Integer> categoryIdList = new ArrayList<>();
     private ProgressBar progressBar;
@@ -68,6 +70,9 @@ public class QuizFragment extends Fragment {
         btnStartQuiz = view.findViewById(R.id.btnStartQuiz);
         btnStatistics = view.findViewById(R.id.btnStatistics);
         btnHistory = view.findViewById(R.id.btnHistory);
+        btnPronounce = view.findViewById(R.id.btnProunce);
+
+
 
         setupDifficultySpinner();
         setupTypeSpinner();
@@ -83,12 +88,17 @@ public class QuizFragment extends Fragment {
             startActivity(intent);
         });
 
+        btnPronounce.setOnClickListener(v ->{
+            loadFragment(new PronounceFragment());
+        });
+
         btnStartQuiz.setOnClickListener(v -> {
             String amount = edtAmount.getText().toString().trim();
             if (amount.isEmpty()) {
                 Toast.makeText(getContext(), "Vui lòng nhập số lượng câu hỏi", Toast.LENGTH_SHORT).show();
                 return;
             }
+
 
             int selectedCategoryPosition = getCategoryPosition(spinnerCategory.getText().toString());
             int categoryId = (selectedCategoryPosition != -1) ? categoryIdList.get(selectedCategoryPosition) : 0;
@@ -134,6 +144,13 @@ public class QuizFragment extends Fragment {
         });
 
         return view;
+    }
+    private void loadFragment(Fragment fragment) {
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentContainer,  fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     private List<Question> convertToQuestions(List<OpenTriviaQuestionResponse> responseList) {

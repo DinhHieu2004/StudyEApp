@@ -69,5 +69,19 @@ public class MainActivity extends AppCompatActivity {
                 bottomNav.setSelectedItemId(R.id.nav_home);
             }
         }
+
+        switchFragment(getIntent().getStringExtra("openFragment"));
+    }
+    private void switchFragment(String fragmentToOpen){
+
+        if(fragmentToOpen != null){
+            switch (fragmentToOpen){
+                case "quizOption":
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragmentContainer, new QuizFragment())
+                            .commit();
+                    break;
+            }
+        }
     }
 }

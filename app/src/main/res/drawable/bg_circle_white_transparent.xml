@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <!-- Background màu trắng trong suốt -->
+    <solid android:color="#33FFFFFF" />
+
+    <!-- Viền trắng mờ (tùy chọn) -->
+    <stroke
+        android:width="1dp"
+        android:color="#66FFFFFF" />
+
+    <!-- Kích thước cố định -->
+    <size
+        android:width="40dp"
+        android:height="40dp" />
+
+</shape>
