@@ -6,21 +6,33 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.myapplication.DAO.AnswerDetailDao;
 import com.example.myapplication.DAO.CategoryStatsDao;
 import com.example.myapplication.DAO.ProgressStatsDao;
+import com.example.myapplication.DAO.QuizResultDao;
 import com.example.myapplication.DAO.StatisticsDao;
+import com.example.myapplication.Entitys.AnswerDetailEntity;
 import com.example.myapplication.Entitys.CategoryStatsEntity;
 import com.example.myapplication.Entitys.ProgressStatsEntity;
+import com.example.myapplication.Entitys.QuizResultEntity;
 import com.example.myapplication.Entitys.StatisticsEntity;
 
 @Database(
-        entities = {StatisticsEntity.class, CategoryStatsEntity.class, ProgressStatsEntity.class},
+        entities = {StatisticsEntity.class, CategoryStatsEntity.class, ProgressStatsEntity.class,
+                QuizResultEntity.class,
+                AnswerDetailEntity.class
+        },
         version = 1,
         exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract StatisticsDao statisticsDao();
+    public abstract QuizResultDao quizHistoryDao();
+
+
+    public abstract AnswerDetailDao answerDetailDao();
+
 
     private static volatile AppDatabase INSTANCE;
 
@@ -45,4 +57,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public static void destroyInstance() {
         INSTANCE = null;
     }
+
+
 }

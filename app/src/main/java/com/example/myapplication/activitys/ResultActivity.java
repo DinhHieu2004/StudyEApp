@@ -86,10 +86,9 @@ public class ResultActivity extends AppCompatActivity {
         btnBack.
 
         setOnClickListener(v -> {
-            Intent intent = new Intent(ResultActivity.this, QuizOptionsActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            Intent intent = new Intent(ResultActivity.this, MainActivity.class);
+            intent.putExtra("openFragment", "quizOption");
             startActivity(intent);
-            finish();
         });
     }
 

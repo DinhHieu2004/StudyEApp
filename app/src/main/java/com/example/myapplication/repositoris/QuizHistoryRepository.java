@@ -37,15 +37,18 @@ public class QuizHistoryRepository {
     private final ApiService apiService;
     private final ExecutorService executor;
     private final Context context;
+    private final AppDatabase database;
 
-    public QuizHistoryRepository(AnswerDetailDao answerDetailDao, Context context) {
+
+    public QuizHistoryRepository(Context context) {
         this.context = context.getApplicationContext();
-        AppDatabase database = AppDatabase.getDatabase(this.context);
+        this.database = AppDatabase.getDatabase(this.context);
         this.quizHistoryDao = database.quizHistoryDao();
         this.answerDetailDao = database.answerDetailDao();
         this.apiService = ApiClient.getClient(this.context).create(ApiService.class);
         this.executor = Executors.newFixedThreadPool(2);
     }
+
 
     /**
      * Interface callback để trả về kết quả
@@ -59,16 +62,105 @@ public class QuizHistoryRepository {
      * Load dữ liệu quiz history (tự động chọn online/offline)
      */
     public void loadQuizHistory(String startDate, String endDate, QuizHistoryCallback callback) {
-        if (NetworkUtils.isNetworkAvailable(context)) {
-            loadFromApi(startDate, endDate, callback);
-        } else {
-            loadFromDatabase(startDate, endDate, callback, true);
-        }
+        // Luôn load từ cache trước để có response nhanh
+        loadFromDatabase(startDate, endDate, new QuizHistoryCallback() {
+            @Override
+            public void onSuccess(List<QuizResult> cachedResults, boolean isFromCache) {
+                // Trả về cached data ngay lập tức
+                callback.onSuccess(cachedResults, true);
+
+                // Sau đó sync với server nếu có mạng
+                if (NetworkUtils.isNetworkAvailable(context)) {
+                    syncWithServer(startDate, endDate, callback);
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                // Nếu không có cache, thử load từ server
+                if (NetworkUtils.isNetworkAvailable(context)) {
+                    loadFromApi(startDate, endDate, callback);
+                } else {
+                    callback.onError("Không có dữ liệu offline và không có kết nối mạng");
+                }
+            }
+        }, true);
     }
+
+
 
     /**
      * Load dữ liệu từ API
      */
+
+    private void syncWithServer(String startDate, String endDate, QuizHistoryCallback callback) {
+        Call<List<QuizResult>> call = apiService.getQuizHistory(startDate, endDate);
+
+        call.enqueue(new Callback<List<QuizResult>>() {
+            @Override
+            public void onResponse(Call<List<QuizResult>> call, Response<List<QuizResult>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<QuizResult> freshResults = response.body();
+
+                    Log.d(TAG, "Received " + freshResults.size() + " results from API");
+
+
+                    // Update cache
+                    saveToDatabase(freshResults, new SaveCallback() {
+                        @Override
+                        public void onSaved() {
+                            // Trả về fresh data
+                            callback.onSuccess(freshResults, false);
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            Log.e(TAG, "Error updating cache: " + error);
+                            // Vẫn trả về fresh data từ API
+                            callback.onSuccess(freshResults, false);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<QuizResult>> call, Throwable t) {
+                Log.w(TAG, "Sync failed, using cached data", t);
+                // Không làm gì, user đã có cached data
+            }
+        });
+    }
+    private void saveToDatabase(List<QuizResult> results, SaveCallback callback) {
+        executor.execute(() -> {
+            try {
+                database.runInTransaction(() -> {
+                    // Xóa dữ liệu cũ
+                    quizHistoryDao.deleteAllQuizResults();
+                    answerDetailDao.deleteAllAnswerDetails();
+
+                    // Lưu dữ liệu mới
+                    for (QuizResult result : results) {
+                        QuizResultEntity entity = new QuizResultEntity(
+                                result.getScore(),
+                                result.getTotal(),
+                                result.getDuration(),
+                                result.getTimestamp()
+                        );
+
+                        long quizId = quizHistoryDao.insertQuizResult(entity);
+                        saveAnswerDetails(result.getAnswers(), quizId);
+                    }
+                });
+
+                Log.d(TAG, "Quiz history saved successfully");
+                callback.onSaved();
+
+            } catch (Exception e) {
+                Log.e(TAG, "Error saving to database", e);
+                callback.onError(e.getMessage());
+            }
+        });
+    }
     private void loadFromApi(String startDate, String endDate, QuizHistoryCallback callback) {
         Call<List<QuizResult>> call = apiService.getQuizHistory(startDate, endDate);
 
@@ -147,36 +239,35 @@ public class QuizHistoryRepository {
     /**
      * Lưu dữ liệu vào database
      */
-    private void saveToDatabase(List<QuizResult> results, SaveCallback callback) {
+    public void clearCache() {
         executor.execute(() -> {
             try {
-                // Xóa dữ liệu cũ
                 quizHistoryDao.deleteAllQuizResults();
                 answerDetailDao.deleteAllAnswerDetails();
-
-                // Lưu từng quiz result
-                for (QuizResult result : results) {
-                    QuizResultEntity entity = new QuizResultEntity(
-                            result.getScore(),
-                            result.getTotal(),
-                            result.getDuration(),
-                            result.getTimestamp()
-                    );
-
-                    long quizId = quizHistoryDao.insertQuizResult(entity);
-
-                    // Lưu answer details
-                    saveAnswerDetails(result.getAnswers(), quizId);
-                }
-
-                Log.d(TAG, "Quiz history saved to database successfully");
-                callback.onSaved();
-
+                Log.d(TAG, "Cache cleared");
             } catch (Exception e) {
-                Log.e(TAG, "Error saving quiz history to database", e);
+                Log.e(TAG, "Error clearing cache", e);
+            }
+        });
+    }
+
+    /**
+     * Thêm method để check cache size
+     */
+    public void getCacheInfo(CacheInfoCallback callback) {
+        executor.execute(() -> {
+            try {
+                int quizCount = quizHistoryDao.getAllQuizResults().size();
+                callback.onResult(quizCount);
+            } catch (Exception e) {
                 callback.onError(e.getMessage());
             }
         });
+    }
+
+    public interface CacheInfoCallback {
+        void onResult(int cacheSize);
+        void onError(String error);
     }
 
     /**
@@ -187,11 +278,16 @@ public class QuizHistoryRepository {
             if (answers != null && !answers.isEmpty()) {
                 List<AnswerDetailEntity> answerEntities = new ArrayList<>();
 
+
+
                 for (AnswerDetail answer : answers) {
                     // Convert List<String> to JSON string
                     String optionsJson = "";
                     if (answer.getOptions() != null) {
                         JSONArray jsonArray = new JSONArray();
+
+                        Log.d(TAG, "Saving answer for quizId = " + quizId + ": " + answer.getQuestionText());
+
                         for (String option : answer.getOptions()) {
                             jsonArray.put(option);
                         }

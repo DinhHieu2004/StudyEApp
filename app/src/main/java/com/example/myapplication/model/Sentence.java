@@ -1,6 +1,8 @@
 package com.example.myapplication.model;
 
-public class Sentence {
+import java.io.Serializable;
+
+public class Sentence implements Serializable {
     private int id;
     private String content;
 

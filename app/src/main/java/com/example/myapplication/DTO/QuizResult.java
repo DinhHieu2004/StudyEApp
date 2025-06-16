@@ -1,7 +1,10 @@
 package com.example.myapplication.DTO;
 
+import android.speech.tts.TextToSpeech;
+
 import java.io.Serializable;
 import java.util.List;
+import java.util.Locale;
 
 public class QuizResult implements Serializable {
     private int score;
@@ -61,5 +64,7 @@ public class QuizResult implements Serializable {
     public void setAnswers(List<AnswerDetail> answers) {
         this.answers = answers;
     }
+
+
 }
 

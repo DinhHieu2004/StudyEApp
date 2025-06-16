@@ -6,16 +6,15 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "answer_details")
 public class AnswerDetailEntity {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long  id;
 
-    private int quizResultId; // Foreign key
+    private int quizResultId;
     private String questionText;
-    private String options; // JSON string
+    private String options;
     private String correctAnswer;
     private String userAnswer;
     private String category;
 
-    // Constructor, getters, setters
     public AnswerDetailEntity() {}
 
     public AnswerDetailEntity(int quizResultId, String questionText, String options,
@@ -29,8 +28,8 @@ public class AnswerDetailEntity {
     }
 
     // Getters and Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
 
     public int getQuizResultId() { return quizResultId; }
     public void setQuizResultId(int quizResultId) { this.quizResultId = quizResultId; }

@@ -20,6 +20,7 @@ import com.example.myapplication.DTO.AnswerDetail;
 import com.example.myapplication.DTO.QuizResult;
 import com.example.myapplication.R;
 import com.example.myapplication.adapters.QuizHistoryAdapter;
+import com.example.myapplication.repositoris.QuizHistoryRepository;
 import com.example.myapplication.services.ApiService;
 
 import com.example.myapplication.utils.ApiClient;
@@ -52,6 +53,8 @@ public class QuizHistoryActivity extends AppCompatActivity {
     private String startDate = "2025-05-26";
     private String endDate = "2025-05-29";
     private boolean isFilterVisible = false;
+    private QuizHistoryRepository quizHistoryRepository;
+
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     private SimpleDateFormat displayDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
@@ -65,6 +68,7 @@ public class QuizHistoryActivity extends AppCompatActivity {
         setupRecyclerView();
         setupClickListeners();
 
+        quizHistoryRepository = new QuizHistoryRepository(this);
         apiService = ApiClient.getClient(this).create(ApiService.class);
         fetchQuizHistory();
     }
@@ -145,6 +149,7 @@ public class QuizHistoryActivity extends AppCompatActivity {
         }
     }
 
+    /**
     private void fetchQuizHistory() {
         showLoading(true);
 
@@ -184,6 +189,62 @@ public class QuizHistoryActivity extends AppCompatActivity {
         });
     }
 
+     **/
+
+    private void fetchQuizHistory() {
+        showLoading(true);
+
+        quizHistoryRepository.loadQuizHistory(startDate, endDate, new QuizHistoryRepository.QuizHistoryCallback() {
+            @Override
+            public void onSuccess(List<QuizResult> results, boolean isFromCache) {
+                runOnUiThread(() -> {
+                    showLoading(false);
+                    updateDataSourceIndicator(isFromCache); // Optional: hiển thị indicator online/offline
+
+                    quizHistoryList.clear();
+                    quizHistoryList.addAll(results);
+
+                    updateStats();
+                    adapter.notifyDataSetChanged();
+
+                    tvNoData.setVisibility(quizHistoryList.isEmpty() ? View.VISIBLE : View.GONE);
+                    recyclerView.setVisibility(quizHistoryList.isEmpty() ? View.GONE : View.VISIBLE);
+                });
+            }
+
+            @Override
+            public void onError(String error) {
+                runOnUiThread(() -> {
+                    showLoading(false);
+                    Toast.makeText(QuizHistoryActivity.this, error, Toast.LENGTH_SHORT).show();
+
+                    // Show no data state
+                    tvNoData.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                });
+            }
+        });
+    }
+
+    // Optional: Method để hiển thị data source indicator
+    private void updateDataSourceIndicator(boolean isFromCache) {
+        // Có thể thêm TextView hoặc indicator để user biết data từ đâu
+        if (isFromCache) {
+            // Show offline indicator
+            Log.d(TAG, "Data loaded from offline cache");
+        } else {
+            // Show online indicator
+            Log.d(TAG, "Data loaded from server");
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (quizHistoryRepository != null) {
+            quizHistoryRepository.cleanup();
+        }
+    }
     private void updateStats() {
         int totalQuizzes = quizHistoryList.size();
         int totalQuestions = 0;

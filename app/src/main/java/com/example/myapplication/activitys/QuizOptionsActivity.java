@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -44,7 +47,7 @@ public class QuizOptionsActivity extends AppCompatActivity {
     private TextInputEditText edtAmount;
     private AutoCompleteTextView spinnerCategory, spinnerDifficulty, spinnerType;
     private MaterialButton btnStartQuiz;
-    private ImageButton btnStatistics, btnHistory;
+    private ImageButton btnStatistics, btnHistory, btnPronounce;
     private ArrayList<String> categoryList = new ArrayList<>();
     private ArrayList<Integer> categoryIdList = new ArrayList<>();
     private ProgressBar progressBar;
@@ -63,6 +66,7 @@ public class QuizOptionsActivity extends AppCompatActivity {
         spinnerType = findViewById(R.id.spinnerType);
         btnStartQuiz = findViewById(R.id.btnStartQuiz);
 
+        btnPronounce = findViewById(R.id.btnProunce);
         btnHistory = findViewById(R.id.btnHistory);
 
         btnStatistics = findViewById(R.id.btnStatistics);
@@ -154,6 +158,8 @@ public class QuizOptionsActivity extends AppCompatActivity {
             });
         });
     }
+
+
     private List<Question> convertToQuestions(List<OpenTriviaQuestionResponse> responseList) {
         List<Question> result = new ArrayList<>();
         for (OpenTriviaQuestionResponse r : responseList) {

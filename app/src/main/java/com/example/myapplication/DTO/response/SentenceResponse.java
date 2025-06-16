@@ -1,21 +1,21 @@
 package com.example.myapplication.DTO.response;
 
-import com.example.myapplication.model.SentencePart;
+import com.example.myapplication.model.Sentence;
 
 import java.util.List;
 
 public class SentenceResponse {
-    private List<SentencePart> parts;
+    private List<Sentence> parts;
     private String message;
     private boolean success;
 
     public SentenceResponse() {}
 
-    public List<SentencePart> getParts() {
+    public List<Sentence> getParts() {
         return parts;
     }
 
-    public void setParts(List<SentencePart> parts) {
+    public void setParts(List<Sentence> parts) {
         this.parts = parts;
     }
 

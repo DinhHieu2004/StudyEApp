@@ -1,12 +1,13 @@
 package com.example.myapplication.DAO;
 
+import com.example.myapplication.Entitys.QuizResultEntity;
+
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.myapplication.Entitys.QuizResultEntity;
-
 import java.util.List;
+
 
 @Dao
 public interface QuizResultDao {
@@ -27,4 +28,5 @@ public interface QuizResultDao {
 
     @Query("DELETE FROM quiz_results WHERE timestamp < :timestamp")
     void deleteOldResults(String timestamp);
+
 }
