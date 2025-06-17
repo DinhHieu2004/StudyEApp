@@ -10,6 +10,7 @@ import com.example.myapplication.DTO.response.DictionaryResponse;
 import com.example.myapplication.DTO.response.GeminiResponse;
 import com.example.myapplication.DTO.request.TokenRequest;
 import com.example.myapplication.DTO.request.UserRequest;
+import com.example.myapplication.DTO.response.LessionResponse;
 import com.example.myapplication.DTO.response.OpenTriviaQuestionResponse;
 import com.example.myapplication.DTO.response.PartProgressDTO;
 import com.example.myapplication.DTO.response.PhonemeResponse;
@@ -64,9 +65,8 @@ public interface ApiService {
     @GET("dictionary/lookup")
     Call<DictionaryResponse> getWord(@Query("word") String word);
 
-//    @GET("topicVocabulary/list")
-//    Call<List<TopicResponse>> getListTopic();
-
+    @GET("api/lessions/watched")
+    Call<List<LessionResponse>> getListLessonWatch();
     @GET("vocabulary/list")
     Call<List<VocabularyResponse>> getVocabularyByTopic(@Query("topicId") int topicId);
     @GET("auth/info")

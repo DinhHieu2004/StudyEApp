@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.DAO.HistorySearchWordDao;
@@ -28,6 +29,7 @@ public class SearchDictionaryFragment extends Fragment {
     private AutoCompleteTextView etSearch;
     private HistorySearchWordDao historyDao;
     private ImageButton btnSearch;
+    private AppCompatImageButton btnBack;
 
     @Nullable
     @Override
@@ -41,6 +43,14 @@ public class SearchDictionaryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         etSearch = view.findViewById(R.id.etSearch);
         btnSearch = view.findViewById(R.id.btnSearch);
+        btnBack = view.findViewById(R.id.btnBack);
+
+        if (getActivity() instanceof DictionaryActivity) {
+            btnBack.setVisibility(View.VISIBLE);
+            btnBack.setOnClickListener(v -> requireActivity().finish());
+        } else {
+            btnBack.setVisibility(View.GONE);
+        }
 
         btnSearch.setOnClickListener(v -> search());
         etSearch.setOnEditorActionListener((v, actionId, event) -> {

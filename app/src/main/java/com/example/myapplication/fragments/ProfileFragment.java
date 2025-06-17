@@ -19,6 +19,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.activitys.AuthActivity;
+import com.example.myapplication.activitys.ReviewLessionActivity;
 import com.example.myapplication.activitys.SettingsActivity;
 import com.example.myapplication.services.ApiService;
 import com.example.myapplication.utils.ApiClient;
@@ -37,6 +38,8 @@ public class ProfileFragment extends Fragment {
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
     private ApiService apiService;
+    private ImageView btnSettings;
+    private CardView logoutCard, reviewCard;
 
     @Nullable
     @Override
@@ -50,6 +53,9 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         userName = view.findViewById(R.id.userName);
+        btnSettings = view.findViewById(R.id.btnSettings);
+        logoutCard = view.findViewById(R.id.logoutCard);
+        reviewCard = view.findViewById(R.id.reviewVocabularyLessons);
         apiService = ApiClient.getClient(requireContext()).create(ApiService.class);
 
 
@@ -61,7 +67,6 @@ public class ProfileFragment extends Fragment {
 
         mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
 
-        ImageView btnSettings = view.findViewById(R.id.btnSettings);
         btnSettings.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), SettingsActivity.class);
             startActivity(intent);
@@ -85,8 +90,11 @@ public class ProfileFragment extends Fragment {
             });
         }
 
-        CardView logoutCard = view.findViewById(R.id.logoutCard);
         logoutCard.setOnClickListener(v -> logout());
+        reviewCard.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ReviewLessionActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void logout() {

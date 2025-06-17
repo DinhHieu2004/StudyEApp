@@ -1,32 +1,23 @@
-package com.example.myapplication.Entitys;
+package com.example.myapplication.DTO.response;
 
-public class Flashcard {
+
+public class FlashcardResponse {
+    private int id;
     private String word;
     private String phonetic;
     private String imageUrl;
     private String audioUrl;
-
     private String meaning;
     private String example;
     private String exampleMeaning;
 
-    public Flashcard(String word, String phonetic, String imageUrl, String audioUrl,
-                     String meaning, String example, String exampleMeaning) {
-        this.word = word;
-        this.phonetic = phonetic;
-        this.imageUrl = imageUrl;
-        this.audioUrl = audioUrl;
-        this.meaning = meaning;
-        this.example = example;
-        this.exampleMeaning = exampleMeaning;
+
+    public int getId() {
+        return id;
     }
 
     public String getWord() {
         return word;
-    }
-
-    public String getMeaning() {
-        return meaning;
     }
 
     public String getPhonetic() {
@@ -41,6 +32,10 @@ public class Flashcard {
         return audioUrl;
     }
 
+    public String getMeaning() {
+        return meaning;
+    }
+
     public String getExample() {
         return example;
     }
@@ -48,5 +43,8 @@ public class Flashcard {
     public String getExampleMeaning() {
         return exampleMeaning;
     }
+
+    public FlashcardResponse() {}
+
 }
 
