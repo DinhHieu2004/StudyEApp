@@ -40,7 +40,18 @@
         <activity
             android:name=".activitys.AuthActivity"
             android:exported="true" />
-
+        <activity
+            android:name=".activitys.UpdateProfileActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activitys.FlashcardActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activitys.SettingsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activitys.ReviewLessionActivity"
+            android:exported="true" />
         <activity
             android:name=".activitys.MainActivity"
             android:exported="true">

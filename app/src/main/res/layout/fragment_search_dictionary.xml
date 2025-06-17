@@ -7,14 +7,26 @@
     android:orientation="horizontal"
     android:padding="8dp">
 
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Quay lại"
+        android:padding="4dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_arrow_back"
+        android:visibility="gone"
+        app:tint="#FFFFFF" />
+
     <AutoCompleteTextView
         android:id="@+id/etSearch"
         android:layout_width="0dp"
         android:layout_height="36dp"
         android:layout_margin="14dp"
         android:layout_weight="1"
-        android:elevation="10dp"
         android:background="@drawable/bg_search_input"
+        android:elevation="10dp"
         android:hint="Nhập từ cần tra"
         android:imeOptions="actionSearch"
         android:padding="5dp"

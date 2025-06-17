@@ -20,6 +20,7 @@ import com.example.myapplication.DTO.response.DialogResponse;
 import com.example.myapplication.DTO.response.LessionResponse;
 import com.example.myapplication.R;
 import com.example.myapplication.services.DialogApiService;
+import com.example.myapplication.services.LessionApiService;
 import com.example.myapplication.utils.ApiClient;
 
 import java.io.IOException;
@@ -112,6 +113,18 @@ public class LessionDetailActivity extends AppCompatActivity {
         fetchDialogPreview(lessionId);
 
         btnVocabulary.setOnClickListener(v -> {
+            LessionApiService apiService = ApiClient.getClient(this).create(LessionApiService.class);
+            apiService.markLessonWatched(lessionId).enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    Log.d("Lesson", "Đã lưu bài học đã xem thành công");
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    Log.e("Lesson", "Lỗi khi lưu bài học đã xem", t);
+                }
+            });
             Intent intent = new Intent(this, VocabularyActivity.class);
             intent.putExtra("lessionId", lessionId);
             startActivity(intent);
