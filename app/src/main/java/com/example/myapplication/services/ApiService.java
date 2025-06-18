@@ -1,6 +1,7 @@
 package com.example.myapplication.services;
 
 import com.example.myapplication.DTO.QuizResult;
+import com.example.myapplication.DTO.SubscriptionPlan;
 import com.example.myapplication.DTO.request.GeminiRequest;
 import com.example.myapplication.DTO.request.QuestionFetchRequest;
 
@@ -62,4 +63,7 @@ public interface ApiService {
     Call<UserResponse> getUserProfile(@Query("uid")String uid);
     @POST("auth/updateInfo")
     Call<Void> updateUserProfile(@Body UserResponse updated);
+
+    @GET("api/subscriptions/plans")
+    Call<List<SubscriptionPlan>> getSubscriptionPlans();
 }

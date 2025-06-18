@@ -24,6 +24,15 @@
             android:name=".activitys.VocabularyActivity"
             android:exported="false" />
         <activity
+            android:name=".activitys.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.UpdateProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.SubscriptionActivity"
+            android:exported="false" />
+        <activity
             android:name=".activitys.LessionDetailActivity"
             android:exported="false" />
         <activity
