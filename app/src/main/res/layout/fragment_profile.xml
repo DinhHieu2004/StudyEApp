@@ -180,7 +180,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/common_google_signin_btn_icon_light_normal" />
+                android:src="@drawable/bottom_btn2" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
@@ -213,7 +213,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/common_google_signin_btn_icon_light_normal" />
+                android:src="@drawable/bottom_btn4" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
