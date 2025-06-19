@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Header với avatar và greeting -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/headerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#4A90E2"
+                android:padding="34dp">
+
+                <!-- Avatar -->
+                <ImageView
+                    android:id="@+id/avatarImage"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/user_1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <!-- Text block bên phải avatar -->
+                <LinearLayout
+                    android:id="@+id/greetingBlock"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintStart_toEndOf="@id/avatarImage"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <TextView
+                        android:id="@+id/greetingText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pronunciation Practice"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/subGreetingText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Choose your level to start practicing"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="normal" />
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Title Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:background="@drawable/bg_summary_card"
+                android:elevation="4dp"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                android:layout_marginTop="-16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select Pronunciation Level"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#003366"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Practice pronunciation with sentences and audio samples"
+                    android:textSize="14sp"
+                    android:textColor="#808080"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+            <!-- Level Cards Grid -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="24dp">
+
+                <!-- Row 1: A1 và A2 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:layout_marginBottom="16dp">
+
+                    <!-- Card A1 -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardA1"
+                        android:layout_width="0dp"
+                        android:layout_height="160dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="6dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="20dp"
+                            android:background="@drawable/bg_level_a1"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="A1"
+                                android:textSize="32sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Beginner"
+                                android:textSize="14sp"
+                                android:textColor="@color/white"
+                                android:layout_marginTop="4dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Basic sounds and simple words"
+                                android:textSize="12sp"
+                                android:textColor="@color/white"
+                                android:textAlignment="center"
+                                android:layout_marginTop="8dp"
+                                android:alpha="0.9" />
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Card A2 -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardA2"
+                        android:layout_width="0dp"
+                        android:layout_height="160dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="6dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="20dp"
+                            android:background="@drawable/bg_level_a2"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="A2"
+                                android:textSize="32sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Elementary"
+                                android:textSize="14sp"
+                                android:textColor="@color/white"
+                                android:layout_marginTop="4dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Common phrases and expressions"
+                                android:textSize="12sp"
+                                android:textColor="@color/white"
+                                android:textAlignment="center"
+                                android:layout_marginTop="8dp"
+                                android:alpha="0.9" />
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+                <!-- Row 2: B1 và B2 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <!-- Card B1 -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardB1"
+                        android:layout_width="0dp"
+                        android:layout_height="160dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="6dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="20dp"
+                            android:background="@drawable/bg_level_b1"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="B1"
+                                android:textSize="32sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Intermediate"
+                                android:textSize="14sp"
+                                android:textColor="@color/white"
+                                android:layout_marginTop="4dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Complex sentences and intonation"
+                                android:textSize="12sp"
+                                android:textColor="@color/white"
+                                android:textAlignment="center"
+                                android:layout_marginTop="8dp"
+                                android:alpha="0.9" />
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Card B2 -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardB2"
+                        android:layout_width="0dp"
+                        android:layout_height="160dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="6dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="20dp"
+                            android:background="@drawable/bg_level_b2"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="B2"
+                                android:textSize="32sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Upper-Intermediate"
+                                android:textSize="14sp"
+                                android:textColor="@color/white"
+                                android:layout_marginTop="4dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Advanced pronunciation patterns"
+                                android:textSize="12sp"
+                                android:textColor="@color/white"
+                                android:textAlignment="center"
+                                android:layout_marginTop="8dp"
+                                android:alpha="0.9" />
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Features Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="24dp"
+                android:background="@drawable/bg_summary_card"
+                android:padding="20dp"
+                android:elevation="2dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Features"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#003366"
+                    android:layout_marginBottom="12dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_mic"
+                        android:layout_marginEnd="12dp"
+                        app:tint="#4A90E2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Record and compare your pronunciation"
+                        android:textSize="14sp"
+                        android:textColor="#666666" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_play"
+                        android:layout_marginEnd="12dp"
+                        app:tint="#4A90E2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Listen to native speaker samples"
+                        android:textSize="14sp"
+                        android:textColor="#666666" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_statistics"
+                        android:layout_marginEnd="12dp"
+                        app:tint="#4A90E2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Track your pronunciation progress"
+                        android:textSize="14sp"
+                        android:textColor="#666666" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

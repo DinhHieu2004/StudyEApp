@@ -2,109 +2,302 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:and="http://schemas.android.com/tools">
 
     <!-- Nội dung chính -->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#F5F5F5">
+        android:fillViewport="true"
+        android:background="#FAFAFA">
 
-        <!-- Header -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/header_gradient"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:orientation="vertical">
 
-            <!-- Title Section -->
-            <LinearLayout
+            <!-- Header với màu xanh dương giống fragment_home -->
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:background="#4A90E2"
+                android:padding="24dp">
 
+                <!-- Back button -->
+                <ImageView
+                    android:id="@+id/btn_back_header"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_arrow_back"
+                    app:tint="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- Title -->
                 <TextView
+                    android:id="@+id/tv_header_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="Kết Quả Bài Tập"
-                    android:textColor="@android:color/white"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintStart_toEndOf="@id/btn_back_header"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
 
-            <!-- Result Summary -->
-            <TextView
-                android:id="@+id/tvResultSummary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Kết quả: 8/10"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- Performance Badge -->
-            <LinearLayout
+            <!-- Result Summary Card - giống style card trong fragment_home -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="16dp"
-                android:gravity="center"/>
-        </LinearLayout>
+                android:layout_margin="16dp"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/white">
 
-        <!-- Content Area -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:padding="16dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
 
-            <!-- Section Title -->
+                    <!-- Icon và kết quả chính -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <!-- Success Icon -->
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/ic_check_circle"
+                            android:layout_marginEnd="16dp"
+                            app:tint="#78D24B" />
+
+                        <!-- Result Summary -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Chúc mừng!"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:textColor="#003366" />
+
+                            <TextView
+                                android:id="@+id/tvResultSummary"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Kết quả: 8/10"
+                                android:textSize="16sp"
+                                android:textColor="#003366"
+                                android:layout_marginTop="4dp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- 3 thống kê giống fragment_home -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="3"
+                        android:gravity="center">
+
+                        <!-- Điểm số -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Điểm số"
+                                android:textSize="12sp"
+                                android:textColor="#808080" />
+
+                            <TextView
+                                android:id="@+id/tv_score"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="80"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="#003366" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="points"
+                                android:textSize="12sp"
+                                android:textColor="#808080" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="50dp"
+                            android:background="#CCCCCC"
+                            android:layout_marginHorizontal="8dp" />
+
+                        <!-- Độ chính xác -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Độ chính xác"
+                                android:textSize="12sp"
+                                android:textColor="#808080" />
+
+                            <TextView
+                                android:id="@+id/tv_accuracy"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="80"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="#003366" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="%"
+                                android:textSize="12sp"
+                                android:textColor="#808080" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="50dp"
+                            android:background="#CCCCCC"
+                            android:layout_marginHorizontal="8dp" />
+
+                        <!-- Thời gian -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Thời gian"
+                                android:textSize="12sp"
+                                android:textColor="#808080" />
+
+                            <TextView
+                                android:id="@+id/tv_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="5"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="#003366" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="minutes"
+                                android:textSize="12sp"
+                                android:textColor="#808080" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Chi tiết kết quả -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Chi tiết kết quả"
-                android:textColor="#333"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="12dp" />
 
-            <!-- Results RecyclerView -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvResults"
+            <!-- Results Card -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:clipToPadding="false" />
-        </LinearLayout>
-
-        <!-- Bottom Actions -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:elevation="4dp"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            android:weightSum="2">
-
-            <Button
-                android:id="@+id/btnBack"
-                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/button_green"
-                android:paddingVertical="12dp"
-                android:text="Hoàn thành"
-                android:textColor="@android:color/white" />
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/white">
+
+                <!-- Results RecyclerView -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvResults"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:padding="16dp"
+                    android:clipToPadding="false" />
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Bottom spacing cho button -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="80dp" />
+
         </LinearLayout>
+
+    </ScrollView>
+
+    <!-- Bottom Button - Fixed -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:elevation="8dp"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_button_primary"
+            android:text="Hoàn thành"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:elevation="2dp" />
+
     </LinearLayout>
 
     <!-- ProgressBar giữa màn hình -->
@@ -114,6 +307,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:indeterminateTint="#4A90E2" />
 
 </FrameLayout>

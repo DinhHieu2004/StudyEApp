@@ -100,8 +100,11 @@ public class LoginFragment extends Fragment {
         loginButton.setOnClickListener(v -> loginUser());
 
         signUpText.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), SignUpFragment.class);
-            startActivity(intent);
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.signupTab, new SignUpFragment())
+                    .addToBackStack(null)
+                    .commit();
         });
 
         googleSignInBtn.setOnClickListener(v -> signInWithGoogle());

@@ -14,6 +14,7 @@ public class LessionResponse implements Serializable {
     private Long topicId;
 
     private String topicName;
+    private boolean isWatched;
 
     public LessionResponse() {
     }
@@ -91,6 +92,14 @@ public class LessionResponse implements Serializable {
 
     public void setTopicName(String topicName) {
         this.topicName = topicName;
+    }
+
+    public boolean isWatched() {
+        return isWatched;
+    }
+
+    public void setWatched(boolean watched) {
+        isWatched = watched;
     }
 }
 

@@ -5,6 +5,7 @@ import com.example.myapplication.DTO.response.PageResponse;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface LessionApiService {
@@ -14,6 +15,9 @@ public interface LessionApiService {
             @Query("page") int page,
             @Query("size") int size
     );
+
+    @POST("api/lessions/watched")
+    Call<Void> markLessonWatched(@Query("lessonId") Long lessonId);
 
 }
 

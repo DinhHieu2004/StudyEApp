@@ -3,6 +3,7 @@ package com.example.myapplication.fragments;
 import androidx.fragment.app.Fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -50,7 +53,7 @@ public class QuizFragment extends Fragment {
     private TextInputEditText edtAmount;
     private AutoCompleteTextView spinnerCategory, spinnerDifficulty, spinnerType;
     private MaterialButton btnStartQuiz;
-    private ImageButton btnStatistics, btnHistory;
+    private ImageButton btnStatistics, btnHistory, btnPronounce;
     private ArrayList<String> categoryList = new ArrayList<>();
     private ArrayList<Integer> categoryIdList = new ArrayList<>();
     private ProgressBar progressBar;
@@ -68,6 +71,9 @@ public class QuizFragment extends Fragment {
         btnStartQuiz = view.findViewById(R.id.btnStartQuiz);
         btnStatistics = view.findViewById(R.id.btnStatistics);
         btnHistory = view.findViewById(R.id.btnHistory);
+        btnPronounce = view.findViewById(R.id.btnProunce);
+
+
 
         setupDifficultySpinner();
         setupTypeSpinner();
@@ -83,12 +89,17 @@ public class QuizFragment extends Fragment {
             startActivity(intent);
         });
 
+        btnPronounce.setOnClickListener(v ->{
+            loadFragment(new PronounceFragment());
+        });
+
         btnStartQuiz.setOnClickListener(v -> {
             String amount = edtAmount.getText().toString().trim();
             if (amount.isEmpty()) {
                 Toast.makeText(getContext(), "Vui lòng nhập số lượng câu hỏi", Toast.LENGTH_SHORT).show();
                 return;
             }
+
 
             int selectedCategoryPosition = getCategoryPosition(spinnerCategory.getText().toString());
             int categoryId = (selectedCategoryPosition != -1) ? categoryIdList.get(selectedCategoryPosition) : 0;
@@ -135,6 +146,13 @@ public class QuizFragment extends Fragment {
 
         return view;
     }
+    private void loadFragment(Fragment fragment) {
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentContainer,  fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
 
     private List<Question> convertToQuestions(List<OpenTriviaQuestionResponse> responseList) {
         List<Question> result = new ArrayList<>();
@@ -175,10 +193,12 @@ public class QuizFragment extends Fragment {
 
     private void fetchCategories() {
         String url = "https://opentdb.com/api_category.php";
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(requireContext());
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
+                    if (!isAdded()) return;
+
                     try {
                         categoryList.add("Trộn");
                         categoryIdList.add(0);
@@ -190,19 +210,31 @@ public class QuizFragment extends Fragment {
                             categoryIdList.add(cat.getInt("id"));
                         }
 
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
-                                android.R.layout.simple_dropdown_item_1line, categoryList);
-                        spinnerCategory.setAdapter(adapter);
+                        Context context = getContext();
+                        if (context != null) {
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                                    context,
+                                    android.R.layout.simple_dropdown_item_1line,
+                                    categoryList
+                            );
 
-                        spinnerCategory.setText(categoryList.get(0), false);
+                            spinnerCategory.setAdapter(adapter);
+                            spinnerCategory.setText(categoryList.get(0), false);
+                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        Toast.makeText(getContext(), "Lỗi khi xử lý dữ liệu", Toast.LENGTH_SHORT).show();
+                        if (getContext() != null)
+                            Toast.makeText(getContext(), "Lỗi khi xử lý dữ liệu", Toast.LENGTH_SHORT).show();
                     }
                 },
-                error -> Toast.makeText(getContext(), "Lỗi kết nối API", Toast.LENGTH_SHORT).show()
+                error -> {
+                    if (getContext() != null)
+                        Toast.makeText(getContext(), "Lỗi kết nối API", Toast.LENGTH_SHORT).show();
+                }
         );
 
         queue.add(request);
     }
+
 }
