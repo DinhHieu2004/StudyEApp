@@ -23,9 +23,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.DTO.request.TokenRequest;
 import com.example.myapplication.DTO.response.AuthenResponse;
+import com.example.myapplication.DTO.response.UserResponse;
 import com.example.myapplication.R;
 import com.example.myapplication.activitys.AuthActivity;
 import com.example.myapplication.activitys.MainActivity;
+import com.example.myapplication.activitys.SubscriptionActivity;
 import com.example.myapplication.services.ApiService;
 import com.example.myapplication.utils.ApiClient;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -216,16 +218,41 @@ public class LoginFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     AuthenResponse authResponse = response.body();
                     String jwtToken = authResponse.getToken();
-                    Log.i(TAG, "JWT token from server: " + jwtToken);
+                    String uid = authResponse.getUid();
 
-                    saveTokenLocally(jwtToken);
+                    Log.i(TAG, "JWT token: " + jwtToken);
+                    Log.i(TAG, "UID: " + uid);
 
-                    Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                    SharedPreferences prefs = requireActivity().getSharedPreferences("user_data", Context.MODE_PRIVATE);
+                    prefs.edit()
+                            .putString("jwt_token", jwtToken)
+                            .putString("uid", uid)
+                            .apply();
 
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    requireActivity().finish();
+                    ApiService apiWithAuth = ApiClient.getClient(requireContext()).create(ApiService.class);
+
+                    apiWithAuth.getUserProfile(uid).enqueue(new Callback<UserResponse>() {
+                        @Override
+                        public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                            Log.i(TAG, "UID: " + authResponse.getUid());
+                            if (response.isSuccessful() && response.body() != null) {
+                                Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+
+                                Intent intent = new Intent(getActivity(), MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                requireActivity().finish();
+                            } else {
+                                Toast.makeText(getActivity(), "Lỗi khi lấy thông tin người dùng", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<UserResponse> call, Throwable t) {
+                            Toast.makeText(getActivity(), "Lỗi kết nối khi lấy thông tin người dùng", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
                 } else {
                     String errorMessage = "Lỗi từ server: " + response.code();
                     if (response.errorBody() != null) {

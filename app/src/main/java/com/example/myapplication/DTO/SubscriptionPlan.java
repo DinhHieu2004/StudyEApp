@@ -9,6 +9,8 @@ public class SubscriptionPlan {
     private int durationDays;
     private List<String> features;
 
+    private boolean isSubscribed;
+
     public SubscriptionPlan(int id, String name, double price, int durationDays, List<String> features) {
         this.id = id;
         this.name = name;
@@ -18,6 +20,14 @@ public class SubscriptionPlan {
     }
 
     public SubscriptionPlan() {
+    }
+
+    public boolean isSubscribed() {
+        return isSubscribed;
+    }
+
+    public void setIsSubscribed(boolean subscribed) {
+        this.isSubscribed = subscribed;
     }
 
     public int getId() {

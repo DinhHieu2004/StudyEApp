@@ -7,15 +7,34 @@ public class UserResponse {
     private String phone;
     private String dob;
 
-    public UserResponse(String uid, String email, String name, String dob, String phone) {
+    private String subscriptionPlan;
+
+    public UserResponse(String uid, String email, String name, String phone, String dob) {
         this.uid = uid;
         this.email = email;
         this.name = name;
-        this.dob = dob;
         this.phone = phone;
+        this.dob = dob;
+    }
+
+    public UserResponse(String uid, String email, String name, String phone, String dob, String subscriptionPlan) {
+        this.uid = uid;
+        this.email = email;
+        this.name = name;
+        this.phone = phone;
+        this.dob = dob;
+        this.subscriptionPlan = subscriptionPlan;
     }
 
     public UserResponse() {
+    }
+
+    public String getSubscriptionPlan() {
+        return subscriptionPlan;
+    }
+
+    public void setSubscriptionPlan(String subscriptionPlan) {
+        this.subscriptionPlan = subscriptionPlan;
     }
 
     public String getEmail() {

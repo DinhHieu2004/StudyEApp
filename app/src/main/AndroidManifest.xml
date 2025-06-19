@@ -9,9 +9,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-
-
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -36,6 +33,18 @@
             android:exported="false" />
         <activity
             android:name=".activitys.SubscriptionActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="myapp"
+                    android:host="payment_result" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activitys.PaymentActivity"
             android:exported="false" />
         <activity
             android:name=".activitys.LessionDetailActivity"
@@ -47,22 +56,16 @@
             android:name=".activitys.SceneLearnActivity"
             android:exported="false" />
         <activity
-            android:name=".activitys.AuthActivity"
-            android:exported="true" />
-        <activity
-            android:name=".activitys.UpdateProfileActivity"
-            android:exported="true" />
+            android:name=".activitys.MainActivity"
+            android:exported="false" />
         <activity
             android:name=".activitys.FlashcardActivity"
-            android:exported="true" />
-        <activity
-            android:name=".activitys.SettingsActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activitys.ReviewLessionActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
-            android:name=".activitys.MainActivity"
+            android:name=".activitys.AuthActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -95,10 +98,10 @@
             android:exported="true" />
         <activity
             android:name=".activitys.TestActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activitys.PronouncePracticeActivity"
-            android:exported="true" />
+            android:exported="false" />
     </application>
 
 </manifest>

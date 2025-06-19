@@ -3,6 +3,7 @@ package com.example.myapplication.services;
 import com.example.myapplication.DTO.QuizResult;
 import com.example.myapplication.DTO.SubscriptionPlan;
 import com.example.myapplication.DTO.request.GeminiRequest;
+import com.example.myapplication.DTO.request.PaymentRequest;
 import com.example.myapplication.DTO.request.QuestionFetchRequest;
 
 import com.example.myapplication.DTO.response.AuthenResponse;
@@ -14,6 +15,7 @@ import com.example.myapplication.DTO.request.UserRequest;
 import com.example.myapplication.DTO.response.LessionResponse;
 import com.example.myapplication.DTO.response.OpenTriviaQuestionResponse;
 import com.example.myapplication.DTO.response.PartProgressDTO;
+import com.example.myapplication.DTO.response.PaymentResponse;
 import com.example.myapplication.DTO.response.PhonemeResponse;
 import com.example.myapplication.DTO.response.SentencePartResponse;
 import com.example.myapplication.DTO.response.StatisticsResponse;
@@ -78,6 +80,9 @@ public interface ApiService {
     @GET("api/subscriptions/plans")
     Call<List<SubscriptionPlan>> getSubscriptionPlans();
 
+    @POST("/auth/updateSubscription")
+    Call<Void> updateSubscription(@Query("uid") String uid, @Query("plan") String plan);
+
     @GET("sentence/part")
     Call<SentencePartResponse> getPart(@Query("level") String level);
 
@@ -104,4 +109,6 @@ public interface ApiService {
     @POST("api/practice/update-progress")
     Call<PartProgressDTO> updatePartProgress(@Body Map<String, Object> progressData);
 
+    @POST("/studyE/api/payment/create")
+    Call<PaymentResponse> createPayment(@Body PaymentRequest request);
 }
