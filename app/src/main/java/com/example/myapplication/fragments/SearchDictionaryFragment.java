@@ -1,5 +1,6 @@
 package com.example.myapplication.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -69,13 +70,21 @@ public class SearchDictionaryFragment extends Fragment {
             }
         });
 
-        new Thread(() -> {
-            historyDao = AppDatabase.getDatabase(requireContext()).historySearchWordDao();
-            List<String> historyWords = historyDao.getAllWords();
+        Context context = getContext();
+        Activity activity = getActivity();
 
-            requireActivity().runOnUiThread(() -> {
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                        requireContext(),
+        if (context == null || activity == null) return;
+
+
+        new Thread(() -> {
+            HistorySearchWordDao dao = AppDatabase.getDatabase(context).historySearchWordDao();
+            List<String> historyWords = dao.getAllWords();
+
+            activity.runOnUiThread(() -> {
+                if (!isAdded()) return;
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                        context,
                         R.layout.dropdown_item_search_dic_history,
                         R.id.text1,
                         historyWords

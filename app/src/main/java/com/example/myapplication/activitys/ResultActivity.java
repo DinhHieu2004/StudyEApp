@@ -83,9 +83,7 @@ public class ResultActivity extends AppCompatActivity {
         rvResults.setAdapter(adapter);
 
         // Xử lý nút Quay lại
-        btnBack.
-
-        setOnClickListener(v -> {
+        btnBack.setOnClickListener(v -> {
             Intent intent = new Intent(ResultActivity.this, MainActivity.class);
             intent.putExtra("openFragment", "quizOption");
             startActivity(intent);
