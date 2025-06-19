@@ -11,7 +11,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
-    private static final String BASE_URL = "http://10.0.2.2:8080/studyE/";
+    private static final String BASE_URL = "http://192.168.39.77:8080/studyE/";
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient(Context context) {
@@ -58,5 +58,24 @@ public class ApiClient {
         if (context == null) return null;
         SharedPreferences prefs = context.getSharedPreferences("user_data", Context.MODE_PRIVATE);
         return prefs.getString("jwt_token", null);
+    }
+
+    public static Retrofit getClientWithToken(Context context, String token) {
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+
+        httpClient.addInterceptor(chain -> {
+            Request original = chain.request();
+            Request.Builder requestBuilder = original.newBuilder()
+                    .header("Authorization", "Bearer " + token)
+                    .method(original.method(), original.body());
+            Request request = requestBuilder.build();
+            return chain.proceed(request);
+        });
+
+        return new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(httpClient.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
 }

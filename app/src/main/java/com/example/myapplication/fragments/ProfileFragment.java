@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import com.example.myapplication.activitys.AuthActivity;
 import com.example.myapplication.activitys.ReviewLessionActivity;
 import com.example.myapplication.activitys.SettingsActivity;
+import com.example.myapplication.activitys.SubscriptionActivity;
 import com.example.myapplication.services.ApiService;
 import com.example.myapplication.utils.ApiClient;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -91,10 +92,18 @@ public class ProfileFragment extends Fragment {
         }
 
         logoutCard.setOnClickListener(v -> logout());
+
+        CardView subscriptionCard = view.findViewById(R.id.subscriptionCard);
+        subscriptionCard.setOnClickListener(v -> {
+            Intent intent = new Intent(requireContext(), SubscriptionActivity.class);
+            startActivity(intent);
+        });
+
         reviewCard.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), ReviewLessionActivity.class);
             startActivity(intent);
         });
+
     }
 
     private void logout() {
